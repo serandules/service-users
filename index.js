@@ -1,7 +1,7 @@
 var utils = require('utils');
 var User = require('user');
 var Token = require('token');
-var mongutil = require('mongutil');
+var mongutils = require('mongutils');
 var sanitizer = require('./sanitizer');
 
 var client = '123456';
@@ -72,7 +72,7 @@ app.post('/users', function (req, res) {
  */
 app.get('/users/:id', function (req, res) {
     var id = req.params.id;
-    if (!mongutil.objectId(id)) {
+    if (!mongutils.objectId(id)) {
         res.send(404, {
             error: 'specified user cannot be found'
         });
@@ -125,7 +125,7 @@ app.get('/users/:id', function (req, res) {
  * /users/51bfd3bd5a51f1722d000001
  */
 app.post('/users/:id', function (req, res) {
-    if (!mongutil.objectId(req.params.id)) {
+    if (!mongutils.objectId(req.params.id)) {
         res.send(404, {
             error: 'specified user cannot be found'
         });

@@ -10,7 +10,7 @@
         "utils": "serandules/utils#master",
         "user": "serandules/user#master",
         "token": "serandules/token#master",
-        "mongutil": "serandules/mongutil#master"
+        "mongutils": "serandules/mongutils#master"
     },
     "repository": {
         "type": "git",
