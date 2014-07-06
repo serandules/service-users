@@ -1,0 +1,19 @@
+{
+    "name": "user-service",
+    "description": "user-service",
+    "version": "0.0.0",
+    "author": {
+        "name": "serandives",
+        "email": "serandives@gmail.com"
+    },
+    "dependencies": {
+        "utils": "serandules/utils#master",
+        "user": "serandules/user#master",
+        "token": "serandules/token#master",
+        "mongutil": "serandules/mongutil#master"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/serandules/user-service.git"
+    }
+}
