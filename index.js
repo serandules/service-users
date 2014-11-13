@@ -1,6 +1,7 @@
 var utils = require('utils');
 var User = require('user');
-var Token = require('token');
+var mongoose = require('mongoose');
+var Token = mongoose.model('Token');
 var mongutils = require('mongutils');
 var sanitizer = require('./sanitizer');
 
