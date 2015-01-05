@@ -1,3 +1,4 @@
+var debug = require('debug')('serandules-user-service');
 var utils = require('utils');
 var User = require('user');
 var mongoose = require('mongoose');
