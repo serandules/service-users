@@ -11,8 +11,6 @@ var client = '123456';
 var express = require('express');
 var app = module.exports = express();
 
-app.use(express.json());
-
 var paging = {
     start: 0,
     count: 10,
@@ -58,7 +56,7 @@ var fields = {
 app.post('/users', function (req, res) {
     User.create(req.body, function (err, user) {
         if (err) {
-            res.send(400, {
+            res.status(400).send({
                 error: 'error while adding new user'
             });
             return;
@@ -75,13 +73,13 @@ app.post('/users', function (req, res) {
 app.get('/users/:id', function (req, res) {
     var id = req.params.id;
     if (!mongutils.objectId(id)) {
-        res.send(404, {
+        res.status(404).send({
             error: 'specified user cannot be found'
         });
         return;
     }
     if (id != req.token.user) {
-        res.send(401, {
+        res.status(401).send({
             error: 'unauthorized access for user'
         });
         return;
@@ -90,13 +88,13 @@ app.get('/users/:id', function (req, res) {
         _id: id
     }).exec(function (err, user) {
         if (err) {
-            res.send(500, {
+            res.status(500).send({
                 error: err
             });
             return;
         }
         if (!user) {
-            res.send(404, {
+            res.status(404).send({
                 error: 'specified user cannot be found'
             });
             return;
@@ -113,7 +111,7 @@ app.get('/users/:id', function (req, res) {
         }
         User.populate(user, opts, function (err, user) {
             if (err) {
-                res.send(400, {
+                res.status(400).send({
                     error: err
                 });
                 return;
@@ -128,7 +126,7 @@ app.get('/users/:id', function (req, res) {
  */
 app.post('/users/:id', function (req, res) {
     if (!mongutils.objectId(req.params.id)) {
-        res.send(404, {
+        res.status(404).send({
             error: 'specified user cannot be found'
         });
         return;
@@ -137,7 +135,7 @@ app.post('/users/:id', function (req, res) {
         _id: req.params.id
     }, req.body, function (err, user) {
         if (err) {
-            res.send(500, {
+            res.status(500).send({
                 error: err
             });
             return;
@@ -163,7 +161,7 @@ app.get('/users', function (req, res) {
         .sort(data.paging.sort)
         .exec(function (err, users) {
             if (err) {
-                res.send(500, {
+                res.status(500).send({
                     error: err
                 });
                 return;
