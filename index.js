@@ -78,7 +78,7 @@ app.get('/users/:id', function (req, res) {
         });
         return;
     }
-    if (id != req.token.user) {
+    if (id != req.token.user.id) {
         res.status(401).send({
             error: 'unauthorized access for user'
         });
