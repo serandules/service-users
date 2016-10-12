@@ -6,8 +6,6 @@ var Token = require('token');
 var mongutils = require('mongutils');
 var sanitizer = require('./sanitizer');
 
-var client = '123456';
-
 var express = require('express');
 var app = module.exports = express();
 
@@ -24,46 +22,17 @@ var fields = {
 /**
  * { "email": "ruchira@serandives.com", "password": "mypassword" }
  */
-/*app.post('/user/login', function (req, res) {
- User.findOne({
- email: req.body.email
- }).exec(function (err, user) {
- if (err) {
- res.send(500, {
- error: err
- });
- return;
- }
- if (!user) {
- res.send(404, {
- error: 'specified user cannot be found'
- });
- return;
- }
- user.auth(req.body.password, function (err, auth) {
- res.send({
- error: err,
- auth: auth
- });
- });
- });
- });*/
-
-
-/**
- * { "email": "ruchira@serandives.com", "password": "mypassword" }
- */
 app.post('/users', function (req, res) {
     User.create(req.body, function (err, user) {
         if (err) {
-            res.status(400).send({
-                error: 'error while adding new user'
-            });
+            log.error(err);
+            res.status(500).send([{
+                code: 500,
+                message: 'Internal Server Error'
+            }]);
             return;
         }
-        res.send({
-            error: false
-        });
+        res.status(204).end();
     });
 });
 
@@ -73,30 +42,35 @@ app.post('/users', function (req, res) {
 app.get('/users/:id', function (req, res) {
     var id = req.params.id;
     if (!mongutils.objectId(id)) {
-        res.status(404).send({
-            error: 'specified user cannot be found'
-        });
+        res.status(404).send([{
+            code: 404,
+            message: 'User Not Found'
+        }]);
         return;
     }
     if (id != req.token.user.id) {
-        res.status(401).send({
-            error: 'unauthorized access for user'
-        });
+        res.status(401).send([{
+            code: 401,
+            message: 'Unauthorized'
+        }]);
         return;
     }
     User.findOne({
         _id: id
     }).exec(function (err, user) {
         if (err) {
-            res.status(500).send({
-                error: err
-            });
+            log.error(err);
+            res.status(500).send([{
+                code: 500,
+                message: 'Internal Server Error'
+            }]);
             return;
         }
         if (!user) {
-            res.status(404).send({
-                error: 'specified user cannot be found'
-            });
+            res.status(404).send([{
+                code: 404,
+                message: 'User Not Found'
+            }]);
             return;
         }
         var name;
@@ -111,9 +85,11 @@ app.get('/users/:id', function (req, res) {
         }
         User.populate(user, opts, function (err, user) {
             if (err) {
-                res.status(400).send({
-                    error: err
-                });
+                log.error(err);
+                res.status(500).send([{
+                    code: 500,
+                    message: 'Internal Server Error'
+                }]);
                 return;
             }
             res.send(user);
@@ -126,24 +102,25 @@ app.get('/users/:id', function (req, res) {
  */
 app.post('/users/:id', function (req, res) {
     if (!mongutils.objectId(req.params.id)) {
-        res.status(404).send({
-            error: 'specified user cannot be found'
-        });
+        res.status(404).send([{
+            code: 404,
+            message: 'User Not Found'
+        }]);
         return;
     }
     User.update({
         _id: req.params.id
     }, req.body, function (err, user) {
         if (err) {
-            res.status(500).send({
-                error: err
-            });
+            log.error(err);
+            res.status(500).send([{
+                code: 500,
+                message: 'Internal Server Error'
+            }]);
             return;
         }
         //TODO: handle 404 case
-        res.send({
-            error: false
-        });
+        res.status(204).end();
     });
 });
 
@@ -161,9 +138,11 @@ app.get('/users', function (req, res) {
         .sort(data.paging.sort)
         .exec(function (err, users) {
             if (err) {
-                res.status(500).send({
-                    error: err
-                });
+                log.error(err);
+                res.status(500).send([{
+                    code: 500,
+                    message: 'Internal Server Error'
+                }]);
                 return;
             }
             res.send(users);
