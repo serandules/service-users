@@ -129,10 +129,10 @@ app.post('/users/:id', function (req, res) {
  */
 app.get('/users', function (req, res) {
     var data = req.query.data ? JSON.parse(req.query.data) : {};
-    sanitizer.clean(data.criteria || (data.criteria = {}));
+    sanitizer.clean(data.query || (data.query = {}));
     utils.merge(data.paging || (data.paging = {}), paging);
     utils.merge(data.fields || (data.fields = {}), fields);
-    User.find(data.criteria)
+    User.find(data.query)
         .skip(data.paging.start)
         .limit(data.paging.count)
         .sort(data.paging.sort)
