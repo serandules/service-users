@@ -8,7 +8,6 @@ var mongutils = require('mongutils');
 var auth = require('auth');
 var serandi = require('serandi');
 var serand = require('serand');
-var locate = require('locate');
 var User = require('user');
 
 var validators = require('./validators');
@@ -26,7 +25,6 @@ module.exports = function (router) {
         ]
     }));
     router.use(bodyParser.json());
-    router.use(locate('/apis/v'));
 
     var paging = {
         start: 0,
@@ -45,12 +43,12 @@ module.exports = function (router) {
         User.create(req.body, function (err, user) {
             if (err) {
                 if (err.code === mongutils.errors.DuplicateKey) {
-                    return res.pond(errors.conflict('User Conflict'));
+                    return res.pond(errors.conflict('User'));
                 }
                 log.error(err);
                 return res.pond(errors.serverError());
             }
-            res.locate('/users/' + user.id).status(201).send(user);
+            res.locate(user.id).status(201).send(user);
         });
     });
 
@@ -60,7 +58,7 @@ module.exports = function (router) {
     router.get('/:id', function (req, res) {
         var id = req.params.id;
         if (!mongutils.objectId(id)) {
-            return res.pond(errors.notFound('User Not Found'));
+            return res.pond(errors.notFound('User'));
         }
         if (!req.token || !req.token.user || req.token.user.id !== id) {
             return res.pond(errors.unauthorized());
@@ -73,7 +71,7 @@ module.exports = function (router) {
                 return res.pond(errors.serverError());
             }
             if (!user) {
-                return res.pond(errors.notFound('User Not Found'))
+                return res.pond(errors.notFound('User'))
             }
             var name;
             var opts = [];
@@ -100,7 +98,7 @@ module.exports = function (router) {
      */
     router.post('/:id', function (req, res) {
         if (!mongutils.objectId(req.params.id)) {
-            return res.pond(errors.notFound('User Not Found'));
+            return res.pond(errors.notFound('User'));
         }
         User.update({
             _id: req.params.id
