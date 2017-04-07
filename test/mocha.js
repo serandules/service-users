@@ -2,8 +2,8 @@ var nconf = require('nconf');
 
 nconf.overrides({
     'services': [
-        {"name": "config-service", "version": "master", "domain": "accounts", "prefix": "/apis/v/configs"},
-        {"name": "token-service", "version": "master", "domain": "accounts", "prefix": "/apis/v/tokens"},
-        {"name": "user-service", "version": "master", "domain": "accounts", "prefix": "/apis/v/users"}
+        {"name": "service-configs", "version": "master", "domain": "accounts", "prefix": "/apis/v/configs"},
+        {"name": "service-tokens", "version": "master", "domain": "accounts", "prefix": "/apis/v/tokens"},
+        {"name": "service-users", "version": "master", "domain": "accounts", "prefix": "/apis/v/users"}
     ]
 });

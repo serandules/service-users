@@ -8,7 +8,7 @@ var mongutils = require('mongutils');
 var auth = require('auth');
 var serandi = require('serandi');
 var serand = require('serand');
-var User = require('user');
+var User = require('model-users');
 
 var validators = require('./validators');
 var sanitizers = require('./sanitizers');
