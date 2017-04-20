@@ -4,6 +4,8 @@ node_js:
 env:
   - CXX=g++-4.8
 addons:
+  hosts:
+    - test.serandives.com
   apt:
     sources:
       - ubuntu-toolchain-r-test
@@ -11,5 +13,3 @@ addons:
       - g++-4.8
 services:
   - mongodb
-hosts:
-  - test.serandives.com
