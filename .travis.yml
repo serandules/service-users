@@ -3,6 +3,7 @@ node_js:
   - "node"
 env:
   - CXX=g++-4.8
+  - env=test
 addons:
   hosts:
     - test.serandives.com
