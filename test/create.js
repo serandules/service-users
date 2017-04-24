@@ -15,7 +15,7 @@ describe('POST /users', function () {
 
     it('with no media type', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST'
         }, function (e, r, b) {
             if (e) {
@@ -33,7 +33,7 @@ describe('POST /users', function () {
 
     it('with unsupported media type', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             headers: {
                 'Content-Type': 'application/xml'
@@ -54,7 +54,7 @@ describe('POST /users', function () {
 
     it('without email address', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {}
         }, function (e, r, b) {
@@ -72,7 +72,7 @@ describe('POST /users', function () {
 
     it('with malformed email address (no @)', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'serandives'
@@ -92,7 +92,7 @@ describe('POST /users', function () {
 
     it('with malformed email address (no .)', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'serandives@com'
@@ -112,7 +112,7 @@ describe('POST /users', function () {
 
     it('with malformed email address (@ after .)', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'serand.ives@com'
@@ -132,7 +132,7 @@ describe('POST /users', function () {
 
     it('without password', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'user@serandives.com'
@@ -152,7 +152,7 @@ describe('POST /users', function () {
 
     it('password without a number', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'user@serandives.com',
@@ -173,7 +173,7 @@ describe('POST /users', function () {
 
     it('password without an upper case letter', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'user@serandives.com',
@@ -194,7 +194,7 @@ describe('POST /users', function () {
 
     it('password without a lower case letter', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'user@serandives.com',
@@ -215,7 +215,7 @@ describe('POST /users', function () {
 
     it('password same as email', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'User@serandives.com',
@@ -236,7 +236,7 @@ describe('POST /users', function () {
 
     it('with existing email', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'admin@serandives.com',
@@ -257,7 +257,7 @@ describe('POST /users', function () {
 
     it('with new email', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users'),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
                 email: 'user@serandives.com',
@@ -273,7 +273,7 @@ describe('POST /users', function () {
             should.exist(b.email);
             b.email.should.equal('user@serandives.com');
             should.exist(r.headers['location']);
-            r.headers['location'].should.equal(pot.resolve('/apis/v/users/' + b.id));
+            r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/users/' + b.id));
             done();
         });
     });

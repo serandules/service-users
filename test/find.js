@@ -15,7 +15,7 @@ describe('GET /users', function () {
                 return done(err);
             }
             request({
-                uri: pot.resolve('/apis/v/configs/boot'),
+                uri: pot.resolve('accounts', '/apis/v/configs/boot'),
                 method: 'GET',
                 json: true
             }, function (e, r, b) {
@@ -32,7 +32,7 @@ describe('GET /users', function () {
                 should.exist(b.value.clients.serandives);
                 serandivesId = b.value.clients.serandives;
                 request({
-                    uri: pot.resolve('/apis/v/users'),
+                    uri: pot.resolve('accounts', '/apis/v/users'),
                     method: 'POST',
                     json: {
                         email: 'user@serandives.com',
@@ -49,7 +49,7 @@ describe('GET /users', function () {
                     b.email.should.equal('user@serandives.com');
                     user = b;
                     request({
-                        uri: pot.resolve('/apis/v/tokens'),
+                        uri: pot.resolve('accounts', '/apis/v/tokens'),
                         method: 'POST',
                         json: {
                             client_id: serandivesId,
@@ -78,7 +78,7 @@ describe('GET /users', function () {
 
     it('GET /users/:id unauthorized', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users/' + user.id),
+            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
             method: 'GET',
             json: true
         }, function (e, r, b) {
@@ -96,7 +96,7 @@ describe('GET /users', function () {
 
     it('GET /users/:id', function (done) {
         request({
-            uri: pot.resolve('/apis/v/users/' + user.id),
+            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
             method: 'GET',
             auth: {
                 bearer: accessToken
