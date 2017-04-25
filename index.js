@@ -42,7 +42,7 @@ module.exports = function (router) {
         User.create(req.body, function (err, user) {
             if (err) {
                 if (err.code === mongutils.errors.DuplicateKey) {
-                    return res.pond(errors.conflict('User'));
+                    return res.pond(errors.conflict());
                 }
                 log.error(err);
                 return res.pond(errors.serverError());
@@ -57,7 +57,7 @@ module.exports = function (router) {
     router.get('/:id', function (req, res) {
         var id = req.params.id;
         if (!mongutils.objectId(id)) {
-            return res.pond(errors.notFound('User'));
+            return res.pond(errors.notFound());
         }
         if (!req.token || !req.token.user || req.token.user.id !== id) {
             return res.pond(errors.unauthorized());
@@ -70,7 +70,7 @@ module.exports = function (router) {
                 return res.pond(errors.serverError());
             }
             if (!user) {
-                return res.pond(errors.notFound('User'))
+                return res.pond(errors.notFound())
             }
             var name;
             var opts = [];
@@ -97,7 +97,7 @@ module.exports = function (router) {
      */
     router.post('/:id', function (req, res) {
         if (!mongutils.objectId(req.params.id)) {
-            return res.pond(errors.notFound('User'));
+            return res.pond(errors.notFound());
         }
         User.update({
             _id: req.params.id
