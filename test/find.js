@@ -1,4 +1,4 @@
-var log = require('logger')('user-service:test:find');
+var log = require('logger')('service-users:test:find');
 var should = require('should');
 var request = require('request');
 var pot = require('pot');
