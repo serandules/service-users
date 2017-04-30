@@ -12,6 +12,16 @@ var User = require('model-users');
 var validators = require('./validators');
 var sanitizers = require('./sanitizers');
 
+var paging = {
+    start: 0,
+    count: 10,
+    sort: ''
+};
+
+var fields = {
+    '*': true
+};
+
 module.exports = function (router) {
     router.use(serandi.pond);
     router.use(serandi.ctx);
@@ -24,16 +34,6 @@ module.exports = function (router) {
         ]
     }));
     router.use(bodyParser.json());
-
-    var paging = {
-        start: 0,
-        count: 10,
-        sort: ''
-    };
-
-    var fields = {
-        '*': true
-    };
 
     /**
      * { "email": "ruchira@serandives.com", "password": "mypassword" }
