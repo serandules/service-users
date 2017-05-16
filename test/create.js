@@ -4,7 +4,7 @@ var should = require('should');
 var request = require('request');
 var pot = require('pot');
 
-describe('POST /users', function () {
+describe.only('POST /users', function () {
     before(function (done) {
         pot.start(done);
     });
@@ -61,11 +61,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -75,17 +75,19 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'serandives'
+                email: 'serandives',
+                password: '1@2.Com'
+
             }
         }, function (e, r, b) {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -101,11 +103,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -121,11 +123,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -141,11 +143,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -162,11 +164,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -183,11 +185,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -204,11 +206,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
@@ -225,11 +227,11 @@ describe('POST /users', function () {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unprocessableEntiy().status);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
             should.exist(b.code);
             should.exist(b.message);
-            b.code.should.equal(errors.unprocessableEntiy().data.code);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
             done();
         });
     });
