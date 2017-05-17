@@ -7,7 +7,7 @@ var utils = require('utils');
 var mongutils = require('mongutils');
 var auth = require('auth');
 var serandi = require('serandi');
-var User = require('model-users');
+var Users = require('model-users');
 
 var validators = require('./validators');
 var sanitizers = require('./sanitizers');
@@ -39,7 +39,7 @@ module.exports = function (router) {
      * { "email": "ruchira@serandives.com", "password": "mypassword" }
      */
     router.post('/', validators.create, sanitizers.create, function (req, res) {
-        User.create(req.body, function (err, user) {
+        Users.create(req.body, function (err, user) {
             if (err) {
                 if (err.code === mongutils.errors.DuplicateKey) {
                     return res.pond(errors.conflict());
@@ -62,7 +62,7 @@ module.exports = function (router) {
         if (!req.token || !req.token.user || req.token.user.id !== id) {
             return res.pond(errors.unauthorized());
         }
-        User.findOne({
+        Users.findOne({
             _id: id
         }).exec(function (err, user) {
             if (err) {
@@ -82,7 +82,7 @@ module.exports = function (router) {
                     });
                 }
             }
-            User.populate(user, opts, function (err, user) {
+            Users.populate(user, opts, function (err, user) {
                 if (err) {
                     log.error(err);
                     return res.pond(errors.serverError());
@@ -99,7 +99,7 @@ module.exports = function (router) {
         if (!mongutils.objectId(req.params.id)) {
             return res.pond(errors.notFound());
         }
-        User.update({
+        Users.update({
             _id: req.params.id
         }, req.body, function (err, user) {
             if (err) {
@@ -119,7 +119,7 @@ module.exports = function (router) {
         sanitizer.clean(data.query || (data.query = {}));
         utils.merge(data.paging || (data.paging = {}), paging);
         utils.merge(data.fields || (data.fields = {}), fields);
-        User.find(data.query)
+        Users.find(data.query)
             .skip(data.paging.start)
             .limit(data.paging.count)
             .sort(data.paging.sort)
