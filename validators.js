@@ -2,7 +2,9 @@ var validators = require('validators');
 var Users = require('model-users');
 
 exports.create = function (req, res, next) {
-    validators.pre(Users, req, res, function (err) {
+    validators.pre({
+        model: Users
+    }, req, res, function (err) {
         if (err) {
             return next(err);
         }
@@ -13,7 +15,10 @@ exports.create = function (req, res, next) {
                 email: data.email
             }
         });
-        validator('password', data.password, function (err) {
+        validator({
+            field: 'password',
+            value: data.password
+        }, function (err) {
             if (err) {
                 return res.pond(err);
             }
