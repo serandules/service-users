@@ -2,7 +2,7 @@ var validators = require('validators');
 var Users = require('model-users');
 
 exports.create = function (req, res, next) {
-    validators.pre({
+    validators.create({
         model: Users
     }, req, res, function (err) {
         if (err) {
