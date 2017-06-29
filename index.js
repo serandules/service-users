@@ -69,7 +69,7 @@ module.exports = function (router) {
         if (!mongutils.objectId(id)) {
             return res.pond(errors.notFound());
         }
-        if (!req.token || !req.token.user || req.token.user.id !== id) {
+        if (!req.token || !req.user || req.user.id !== id) {
             return res.pond(errors.unauthorized());
         }
         Users.findOne({
