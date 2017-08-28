@@ -40,6 +40,7 @@ module.exports = function (router) {
     /**
      * { "email": "ruchira@serandives.com", "password": "mypassword" }
      */
+    // TODO: sync up all vehicles changes with other modules
     router.post('/', validators.create, sanitizers.create, function (req, res) {
         Users.create(req.body, function (err, user) {
             if (err) {
