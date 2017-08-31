@@ -5,14 +5,6 @@ var request = require('request');
 var pot = require('pot');
 
 describe('POST /users', function () {
-    before(function (done) {
-        pot.start(done);
-    });
-
-    after(function (done) {
-        pot.stop(done);
-    });
-
     it('with no media type', function (done) {
         request({
             uri: pot.resolve('accounts', '/apis/v/users'),

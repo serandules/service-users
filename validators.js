@@ -3,6 +3,7 @@ var Users = require('model-users');
 
 exports.create = function (req, res, next) {
     validators.create({
+        content: 'json',
         model: Users
     }, req, res, function (err) {
         if (err) {

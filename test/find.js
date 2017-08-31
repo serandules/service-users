@@ -10,7 +10,7 @@ describe('GET /users', function () {
     var user;
     var accessToken;
     before(function (done) {
-        pot.start(function (err) {
+        pot.drop('users', function (err) {
             if (err) {
                 return done(err);
             }
@@ -70,10 +70,6 @@ describe('GET /users', function () {
                 });
             });
         });
-    });
-
-    after(function (done) {
-        pot.stop(done);
     });
 
     it('GET /users/:id unauthorized', function (done) {

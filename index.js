@@ -22,6 +22,7 @@ var fields = {
     '*': true
 };
 
+// TODO: validate email address updates through PUT. i.e. switching to a new email address should re-validate the email for ownership
 module.exports = function (router) {
     router.use(serandi.pond);
     router.use(serandi.ctx);
@@ -62,7 +63,7 @@ module.exports = function (router) {
         if (!mongutils.objectId(id)) {
             return res.pond(errors.notFound());
         }
-        if (!req.token || !req.user || req.user.id !== id) {
+        if (!req.token || !req.user || (req.user.id !== id)) {
             return res.pond(errors.unauthorized());
         }
         Users.findOne({
