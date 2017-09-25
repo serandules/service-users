@@ -10,89 +10,83 @@ describe('GET /users', function () {
     var user;
     var accessToken;
     before(function (done) {
-        pot.drop('users', function (err) {
-            if (err) {
-                return done(err);
-            }
-            request({
-                uri: pot.resolve('accounts', '/apis/v/configs/boot'),
-                method: 'GET',
-                json: true
-            }, function (e, r, b) {
-                if (e) {
-                    return done(e);
-                }
-                r.statusCode.should.equal(200);
-                log.info(b);
-                should.exist(b);
-                should.exist(b.name);
-                b.name.should.equal('boot');
-                should.exist(b.value);
-                should.exist(b.value.clients);
-                should.exist(b.value.clients.serandives);
-                serandivesId = b.value.clients.serandives;
-                request({
-                    uri: pot.resolve('accounts', '/apis/v/users'),
-                    method: 'POST',
-                    json: {
-                        email: 'user@serandives.com',
-                        password: '1@2.Com'
-                    }
-                }, function (e, r, b) {
-                    if (e) {
-                        return done(e);
-                    }
-                    r.statusCode.should.equal(201);
-                    should.exist(b);
-                    should.exist(b.id);
-                    should.exist(b.email);
-                    b.email.should.equal('user@serandives.com');
-                    user = b;
-                    request({
-                        uri: pot.resolve('accounts', '/apis/v/tokens'),
-                        method: 'POST',
-                        json: {
-                            client_id: serandivesId,
-                            grant_type: 'password',
-                            username: 'user@serandives.com',
-                            password: '1@2.Com'
-                        }
-                    }, function (e, r, b) {
-                        if (e) {
-                            return done(e);
-                        }
-                        r.statusCode.should.equal(200);
-                        should.exist(b.access_token);
-                        should.exist(b.refresh_token);
-                        accessToken = b.access_token;
-                        done();
-                    });
-                });
-            });
-        });
-    });
-
-    it('GET /users/:id unauthorized', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+            uri: pot.resolve('accounts', '/apis/v/configs/boot'),
             method: 'GET',
             json: true
         }, function (e, r, b) {
             if (e) {
                 return done(e);
             }
-            r.statusCode.should.equal(errors.unauthorized().status);
+            r.statusCode.should.equal(200);
+            log.info(b);
             should.exist(b);
-            should.exist(b.code);
-            should.exist(b.message);
-            b.code.should.equal(errors.unauthorized().data.code);
+            should.exist(b.name);
+            b.name.should.equal('boot');
+            should.exist(b.value);
+            should.exist(b.value.clients);
+            should.exist(b.value.clients.serandives);
+            serandivesId = b.value.clients.serandives;
+            request({
+                uri: pot.resolve('accounts', '/apis/v/users'),
+                method: 'POST',
+                json: {
+                    email: 'find-user@serandives.com',
+                    password: '1@2.Com'
+                }
+            }, function (e, r, b) {
+                if (e) {
+                    return done(e);
+                }
+                r.statusCode.should.equal(201);
+                should.exist(b);
+                should.exist(b.id);
+                should.exist(b.email);
+                b.email.should.equal('find-user@serandives.com');
+                user = b;
+                request({
+                    uri: pot.resolve('accounts', '/apis/v/tokens'),
+                    method: 'POST',
+                    json: {
+                        client_id: serandivesId,
+                        grant_type: 'password',
+                        username: 'find-user@serandives.com',
+                        password: '1@2.Com'
+                    }
+                }, function (e, r, b) {
+                    if (e) {
+                        return done(e);
+                    }
+                    r.statusCode.should.equal(200);
+                    should.exist(b.access_token);
+                    should.exist(b.refresh_token);
+                    accessToken = b.access_token;
+                    done();
+                });
+            });
+        });
+    });
+
+    it('anonymous unauthorized', function (done) {
+        request({
+            uri: pot.resolve('accounts', '/apis/v/users'),
+            method: 'GET',
+            json: true
+        }, function (e, r, b) {
+            if (e) {
+                return done(e);
+            }
+            r.statusCode.should.equal(200);
+            should.exist(b);
+            should.exist(b.length);
+            b.length.should.equal(0);
             done();
         });
     });
 
-    it('GET /users/:id', function (done) {
+    it('logged in unauthorized', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+            uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'GET',
             auth: {
                 bearer: accessToken
@@ -104,11 +98,36 @@ describe('GET /users', function () {
             }
             r.statusCode.should.equal(200);
             should.exist(b);
-            should.exist(b.id);
-            should.exist(b.email);
-            b.id.should.equal(user.id);
-            b.email.should.equal('user@serandives.com');
+            should.exist(b.length);
+            b.length.should.equal(1);
+            should.exist(b[0].id);
+            b[0].id.should.equal(user.id);
             done();
+        });
+    });
+
+    it('by admin', function (done) {
+        pot.admin(function (err, admin) {
+            if (err) {
+                return done(err);
+            }
+            request({
+                uri: pot.resolve('accounts', '/apis/v/users'),
+                method: 'GET',
+                auth: {
+                    bearer: admin.token.access_token
+                },
+                json: true
+            }, function (e, r, b) {
+                if (e) {
+                    return done(e);
+                }
+                r.statusCode.should.equal(200);
+                should.exist(b);
+                should.exist(b.length);
+                b.length.should.be.above(1);
+                done();
+            });
         });
     });
 });

@@ -12,19 +12,9 @@ var Users = require('model-users');
 var validators = require('./validators');
 var sanitizers = require('./sanitizers');
 
-var paging = {
-    start: 0,
-    count: 10,
-    sort: ''
-};
-
-var fields = {
-    '*': true
-};
-
 // TODO: validate email address updates through PUT. i.e. switching to a new email address should re-validate the email for ownership
 module.exports = function (router) {
-    router.use(serandi.pond);
+    router.use(serandi.many);
     router.use(serandi.ctx);
     router.use(auth({
         GET: [
@@ -51,7 +41,18 @@ module.exports = function (router) {
                 log.error(err);
                 return res.pond(errors.serverError());
             }
-            res.locate(user.id).status(201).send(user);
+            Users.findOneAndUpdate({_id: user.id}, {
+                permissions: [{
+                    user: user.id,
+                    actions: ['read', 'update', 'delete']
+                }]
+            }, {new: true}).exec(function (err, user) {
+                if (err) {
+                    log.error(err);
+                    return res.pond(errors.serverError());
+                }
+                res.locate(user.id).status(201).send(user);
+            });
         });
     });
 
@@ -99,16 +100,14 @@ module.exports = function (router) {
     /**
      * /users/51bfd3bd5a51f1722d000001
      */
-    router.post('/:id', function (req, res) {
-        if (!mongutils.objectId(req.params.id)) {
-            return res.pond(errors.notFound());
-        }
-        Users.update({
-            _id: req.params.id
-        }, req.body, function (err, user) {
+    router.put('/:id', validators.update, function (req, res) {
+        Users.findOneAndUpdate(req.query, req.body, {new: true}, function (err, user) {
             if (err) {
                 log.error(err);
                 return res.pond(errors.serverError());
+            }
+            if (!user) {
+                return res.pond(errors.notFound())
             }
             //TODO: handle 404 case
             res.send(user);
@@ -118,21 +117,13 @@ module.exports = function (router) {
     /**
      * /users?data={}
      */
-    router.get('/', function (req, res) {
-        var data = req.query.data ? JSON.parse(req.query.data) : {};
-        sanitizer.clean(data.query || (data.query = {}));
-        utils.merge(data.paging || (data.paging = {}), paging);
-        utils.merge(data.fields || (data.fields = {}), fields);
-        Users.find(data.query)
-            .skip(data.paging.start)
-            .limit(data.paging.count)
-            .sort(data.paging.sort)
-            .exec(function (err, users) {
-                if (err) {
-                    log.error(err);
-                    return res.pond(errors.serverError());
-                }
-                res.send(users);
-            });
+    router.get('/', validators.find, function (req, res) {
+        mongutils.find(Users, req.query.data, function (err, users, paging) {
+            if (err) {
+                log.error(err);
+                return res.pond(errors.serverError());
+            }
+            res.many(users, paging);
+        });
     });
 };

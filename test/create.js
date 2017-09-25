@@ -129,7 +129,7 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'user@serandives.com'
+                email: 'create-user@serandives.com'
             }
         }, function (e, r, b) {
             if (e) {
@@ -149,7 +149,7 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'user@serandives.com',
+                email: 'create-user@serandives.com',
                 password: 'Hello'
             }
         }, function (e, r, b) {
@@ -170,7 +170,7 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'user@serandives.com',
+                email: 'create-user@serandives.com',
                 password: 'hello1'
             }
         }, function (e, r, b) {
@@ -191,7 +191,7 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'user@serandives.com',
+                email: 'create-user@serandives.com',
                 password: 'HELLO1'
             }
         }, function (e, r, b) {
@@ -212,8 +212,8 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'User@serandives.com',
-                password: 'use@Serandives.com'
+                email: 'create-User@serandives.com',
+                password: 'create-use@Serandives.com'
             }
         }, function (e, r, b) {
             if (e) {
@@ -254,7 +254,7 @@ describe('POST /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users'),
             method: 'POST',
             json: {
-                email: 'user@serandives.com',
+                email: 'create-user@serandives.com',
                 password: '1@2.Com'
             }
         }, function (e, r, b) {
@@ -265,10 +265,18 @@ describe('POST /users', function () {
             should.exist(b);
             should.exist(b.id);
             should.exist(b.email);
-            b.email.should.equal('user@serandives.com');
+            b.email.should.equal('create-user@serandives.com');
             should.exist(r.headers['location']);
             r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/users/' + b.id));
             done();
         });
     });
+
+    it.skip('should prevent unintented email updates', function (done) {
+        true.should.not.equal(false)
+    })
+
+    it.skip('should implement captcha', function (done) {
+        true.should.not.equal(false)
+    })
 });
