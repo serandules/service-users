@@ -6,6 +6,7 @@ var errors = require('errors');
 var utils = require('utils');
 var mongutils = require('mongutils');
 var auth = require('auth');
+var throttle = require('throttle');
 var serandi = require('serandi');
 var Users = require('model-users');
 
@@ -26,6 +27,7 @@ module.exports = function (router) {
             '^\/([\/].*|$)'
         ]
     }));
+    router.use(throttle({name: 'users'}));
     router.use(bodyParser.json());
 
     /**

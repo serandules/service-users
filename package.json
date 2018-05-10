@@ -22,6 +22,7 @@
     "errors": "serandules/errors#master",
     "permission": "serandules/permission#master",
     "auth": "serandules/auth#master",
+    "throttle": "serandules/throttle#master",
     "serandi": "serandules/serandi#master"
   },
   "devDependencies": {
