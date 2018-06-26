@@ -43,11 +43,13 @@ module.exports = function (router) {
                 log.error(err);
                 return res.pond(errors.serverError());
             }
+            var permissions = user.permissions;
+            permissions.push({
+              user: user.id,
+              actions: ['read', 'update', 'delete']
+            });
             Users.findOneAndUpdate({_id: user.id}, {
-                permissions: [{
-                    user: user.id,
-                    actions: ['read', 'update', 'delete']
-                }]
+                permissions: permissions
             }, {new: true}).exec(function (err, user) {
                 if (err) {
                     log.error(err);
