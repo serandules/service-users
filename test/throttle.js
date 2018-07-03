@@ -1,3 +1,3 @@
 var pot = require('pot');
 
-pot.throttlit('autos', 'vehicle-models')
+pot.throttlit('accounts', 'users');
