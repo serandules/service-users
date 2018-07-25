@@ -19,7 +19,6 @@ describe('GET /users', function () {
                 return done(e);
             }
             r.statusCode.should.equal(200);
-            log.info(b);
             should.exist(b);
             should.exist(b.name);
             b.name.should.equal('boot');

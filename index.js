@@ -40,7 +40,7 @@ module.exports = function (router) {
                 if (err.code === mongutils.errors.DuplicateKey) {
                     return res.pond(errors.conflict());
                 }
-                log.error(err);
+                log.error('users:create', err);
                 return res.pond(errors.serverError());
             }
             var permissions = user.permissions;
@@ -52,7 +52,7 @@ module.exports = function (router) {
                 permissions: permissions
             }, {new: true}).exec(function (err, user) {
                 if (err) {
-                    log.error(err);
+                    log.error('users:find-one-and-update', err);
                     return res.pond(errors.serverError());
                 }
                 res.locate(user.id).status(201).send(user);
@@ -75,7 +75,7 @@ module.exports = function (router) {
             _id: id
         }).exec(function (err, user) {
             if (err) {
-                log.error(err);
+                log.error('users:find-one', err);
                 return res.pond(errors.serverError());
             }
             if (!user) {
@@ -93,7 +93,7 @@ module.exports = function (router) {
             }
             Users.populate(user, opts, function (err, user) {
                 if (err) {
-                    log.error(err);
+                    log.error('users:populate', err);
                     return res.pond(errors.serverError());
                 }
                 res.send(user);
@@ -107,7 +107,7 @@ module.exports = function (router) {
     router.put('/:id', validators.update, function (req, res) {
         Users.findOneAndUpdate(req.query, req.body, {new: true}, function (err, user) {
             if (err) {
-                log.error(err);
+                log.error('users:find-one-and-update', err);
                 return res.pond(errors.serverError());
             }
             if (!user) {
@@ -124,7 +124,7 @@ module.exports = function (router) {
     router.get('/', validators.find, function (req, res) {
         mongutils.find(Users, req.query.data, function (err, users, paging) {
             if (err) {
-                log.error(err);
+                log.error('users:find', err);
                 return res.pond(errors.serverError());
             }
             res.many(users, paging);
