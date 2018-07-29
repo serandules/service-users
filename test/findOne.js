@@ -10,63 +10,58 @@ describe('GET /users', function () {
     var user;
     var accessToken;
     before(function (done) {
-        pot.drop('users', function (err) {
-            if (err) {
-                return done(err);
+        request({
+            uri: pot.resolve('accounts', '/apis/v/configs/boot'),
+            method: 'GET',
+            json: true
+        }, function (e, r, b) {
+            if (e) {
+                return done(e);
             }
+            r.statusCode.should.equal(200);
+            should.exist(b);
+            should.exist(b.name);
+            b.name.should.equal('boot');
+            should.exist(b.value);
+            should.exist(b.value.clients);
+            should.exist(b.value.clients.serandives);
+            serandivesId = b.value.clients.serandives;
             request({
-                uri: pot.resolve('accounts', '/apis/v/configs/boot'),
-                method: 'GET',
-                json: true
+                uri: pot.resolve('accounts', '/apis/v/users'),
+                method: 'POST',
+                json: {
+                    email: 'findone-user@serandives.com',
+                    password: '1@2.Com'
+                }
             }, function (e, r, b) {
                 if (e) {
                     return done(e);
                 }
-                r.statusCode.should.equal(200);
+                r.statusCode.should.equal(201);
                 should.exist(b);
-                should.exist(b.name);
-                b.name.should.equal('boot');
-                should.exist(b.value);
-                should.exist(b.value.clients);
-                should.exist(b.value.clients.serandives);
-                serandivesId = b.value.clients.serandives;
+                should.exist(b.id);
+                should.exist(b.email);
+                b.email.should.equal('findone-user@serandives.com');
+                user = b;
                 request({
-                    uri: pot.resolve('accounts', '/apis/v/users'),
+                    uri: pot.resolve('accounts', '/apis/v/tokens'),
                     method: 'POST',
-                    json: {
-                        email: 'findone-user@serandives.com',
+                    form: {
+                        client_id: serandivesId,
+                        grant_type: 'password',
+                        username: 'findone-user@serandives.com',
                         password: '1@2.Com'
-                    }
+                    },
+                    json: true
                 }, function (e, r, b) {
                     if (e) {
                         return done(e);
                     }
-                    r.statusCode.should.equal(201);
-                    should.exist(b);
-                    should.exist(b.id);
-                    should.exist(b.email);
-                    b.email.should.equal('findone-user@serandives.com');
-                    user = b;
-                    request({
-                        uri: pot.resolve('accounts', '/apis/v/tokens'),
-                        method: 'POST',
-                        form: {
-                            client_id: serandivesId,
-                            grant_type: 'password',
-                            username: 'findone-user@serandives.com',
-                            password: '1@2.Com'
-                        },
-                        json: true
-                    }, function (e, r, b) {
-                        if (e) {
-                            return done(e);
-                        }
-                        r.statusCode.should.equal(200);
-                        should.exist(b.access_token);
-                        should.exist(b.refresh_token);
-                        accessToken = b.access_token;
-                        done();
-                    });
+                    r.statusCode.should.equal(200);
+                    should.exist(b.access_token);
+                    should.exist(b.refresh_token);
+                    accessToken = b.access_token;
+                    done();
                 });
             });
         });
