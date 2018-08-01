@@ -28,6 +28,7 @@ module.exports = function (router) {
         ]
     }));
     router.use(throttle.apis('users'));
+    router.use(serandi.cors);
     router.use(bodyParser.json());
 
     /**
