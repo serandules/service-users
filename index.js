@@ -28,14 +28,13 @@ module.exports = function (router) {
         ]
     }));
     router.use(throttle.apis('users'));
-    router.use(serandi.cors);
     router.use(bodyParser.json());
 
     /**
      * { "email": "ruchira@serandives.com", "password": "mypassword" }
      */
     // TODO: sync up all vehicles changes with other modules
-    router.post('/', validators.create, sanitizers.create, function (req, res) {
+    router.post('/', serandi.captcha, validators.create, sanitizers.create, function (req, res) {
         Users.create(req.body, function (err, user) {
             if (err) {
                 if (err.code === mongutils.errors.DuplicateKey) {
