@@ -104,7 +104,7 @@ module.exports = function (router) {
     /**
      * /users/51bfd3bd5a51f1722d000001
      */
-    router.put('/:id', validators.update, function (req, res) {
+    router.put('/:id', serandi.otp, validators.update, sanitizers.create, function (req, res) {
         Users.findOneAndUpdate(req.query, req.body, {new: true}, function (err, user) {
             if (err) {
                 log.error('users:find-one-and-update', err);
