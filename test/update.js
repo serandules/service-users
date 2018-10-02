@@ -13,6 +13,31 @@ describe('PUT /users', function () {
   var accessToken;
   var groups;
 
+  var createOTPS = function (token, done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/otps'),
+      method: 'POST',
+      json: {
+        name: 'password-update',
+        password: pot.password()
+      },
+      auth: {
+        bearer: token
+      }
+    }, function (e, r, b) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(201);
+      should.exist(b);
+      should.exist(b.id);
+      should.exist(b.value);
+      should.exist(r.headers['location']);
+      r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/otps/' + b.id));
+      done(null, b);
+    })
+  };
+
   before(function (done) {
     pot.groups(function (err, groupz) {
       if (err) {
@@ -43,7 +68,7 @@ describe('PUT /users', function () {
           },
           json: {
             email: 'update-user@serandives.com',
-            password: '1@2.Com'
+            password: pot.password()
           }
         }, function (e, r, b) {
           if (e) {
@@ -65,7 +90,7 @@ describe('PUT /users', function () {
               client_id: serandivesId,
               grant_type: 'password',
               username: 'update-user@serandives.com',
-              password: '1@2.Com',
+              password: pot.password(),
               redirect_uri: pot.resolve('accounts', '/auth')
             },
             json: true
@@ -107,29 +132,16 @@ describe('PUT /users', function () {
           return done(err);
         }
         usr.groups = _.map(groups, '_id');
-        request({
-          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
-          method: 'PUT',
-          auth: {
-            bearer: accessToken
-          },
-          json: usr
-        }, function (e, r, b) {
-          if (e) {
-            return done(e);
+        createOTPS(accessToken, function (err, otp) {
+          if (err) {
+            return done(err);
           }
-          r.statusCode.should.equal(errors.unprocessableEntity().status);
-          should.exist(b);
-          should.exist(b.code);
-          should.exist(b.message);
-          b.code.should.equal(errors.unprocessableEntity().data.code);
-          var pub = _.find(groups, function (group) {
-            return group.name === 'public';
-          });
-          usr.groups = [String(pub._id)];
           request({
             uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
             method: 'PUT',
+            headers: {
+              'X-OTP': otp.value
+            },
             auth: {
               bearer: accessToken
             },
@@ -138,12 +150,41 @@ describe('PUT /users', function () {
             if (e) {
               return done(e);
             }
-            r.statusCode.should.equal(200);
+            r.statusCode.should.equal(errors.unprocessableEntity().status);
             should.exist(b);
-            should.exist(b.id);
-            should.exist(b.email);
-            b.id.should.equal(user.id);
-            done();
+            should.exist(b.code);
+            should.exist(b.message);
+            b.code.should.equal(errors.unprocessableEntity().data.code);
+            var pub = _.find(groups, function (group) {
+              return group.name === 'public';
+            });
+            usr.groups = [String(pub._id)];
+            createOTPS(accessToken, function (err, otp) {
+              if (err) {
+                return done(err);
+              }
+              request({
+                uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+                method: 'PUT',
+                headers: {
+                  'X-OTP': otp.value
+                },
+                auth: {
+                  bearer: accessToken
+                },
+                json: usr
+              }, function (e, r, b) {
+                if (e) {
+                  return done(e);
+                }
+                r.statusCode.should.equal(200);
+                should.exist(b);
+                should.exist(b.id);
+                should.exist(b.email);
+                b.id.should.equal(user.id);
+                done();
+              });
+            });
           });
         });
       });
@@ -227,7 +268,7 @@ describe('PUT /users', function () {
         should.exist(b.id);
         should.exist(b.name);
         should.exist(b.value);
-        usr.password = 'dummy';
+        usr.password = pot.password();
         request({
           uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
           method: 'PUT',
@@ -247,7 +288,30 @@ describe('PUT /users', function () {
           should.exist(b.id);
           should.exist(b.email);
           b.id.should.equal(usr.id);
-          done();
+          request({
+            uri: pot.resolve('accounts', '/apis/v/tokens'),
+            method: 'POST',
+            headers: {
+              'X-Captcha': 'dummy'
+            },
+            form: {
+              client_id: serandivesId,
+              grant_type: 'password',
+              username: 'update-user@serandives.com',
+              password: pot.password(),
+              redirect_uri: pot.resolve('accounts', '/auth')
+            },
+            json: true
+          }, function (e, r, b) {
+            if (e) {
+              return done(e);
+            }
+            r.statusCode.should.equal(200);
+            should.exist(b.access_token);
+            should.exist(b.refresh_token);
+            accessToken = b.access_token;
+            done();
+          });
         });
       });
     });
@@ -278,7 +342,7 @@ describe('PUT /users', function () {
           bearer: accessToken
         },
         json: {
-          name: 'password-reset',
+          name: 'invalid-otp',
           password: pot.password()
         }
       }, function (e, r, b) {
@@ -290,7 +354,7 @@ describe('PUT /users', function () {
         should.exist(b.id);
         should.exist(b.name);
         should.exist(b.value);
-        usr.password = 'dummy';
+        usr.password = pot.password();
         request({
           uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
           method: 'PUT',
