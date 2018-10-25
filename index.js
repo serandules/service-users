@@ -14,7 +14,7 @@ var validators = require('./validators');
 var sanitizers = require('./sanitizers');
 
 // TODO: validate email address updates through PUT. i.e. switching to a new email address should re-validate the email for ownership
-module.exports = function (router) {
+module.exports = function (router, done) {
     router.use(serandi.many);
     router.use(serandi.ctx);
     router.use(auth({
@@ -34,7 +34,7 @@ module.exports = function (router) {
      * { "email": "ruchira@serandives.com", "password": "mypassword" }
      */
     // TODO: sync up all vehicles changes with other modules
-    router.post('/', serandi.captcha, validators.create, sanitizers.create, function (req, res) {
+    router.post('/', serandi.captcha, validators.create, sanitizers.create, function (req, res, next) {
         Users.create(req.body, function (err, user) {
             if (err) {
                 if (err.code === mongutils.errors.DuplicateKey) {
@@ -63,71 +63,53 @@ module.exports = function (router) {
     /**
      * /users/51bfd3bd5a51f1722d000001
      */
-    router.get('/:id', function (req, res) {
-        var id = req.params.id;
-        if (!mongutils.objectId(id)) {
-            return res.pond(errors.notFound());
+    router.get('/:id', validators.findOne, sanitizers.findOne, function (req, res, next) {
+      mongutils.findOne(Users, req.query, function (err, user) {
+        if (err) {
+          return next(err);
         }
-        if (!req.token || !req.user || (req.user.id !== id)) {
-            return res.pond(errors.unauthorized());
-        }
-        Users.findOne({
-            _id: id
-        }).exec(function (err, user) {
-            if (err) {
-                log.error('users:find-one', err);
-                return res.pond(errors.serverError());
-            }
-            if (!user) {
-                return res.pond(errors.notFound())
-            }
-            var name;
-            var opts = [];
-            for (name in user.addresses) {
-                if (user.addresses.hasOwnProperty(name)) {
-                    opts.push({
-                        model: 'Location',
-                        path: 'addresses.' + name + '.location'
-                    });
-                }
-            }
-            Users.populate(user, opts, function (err, user) {
-                if (err) {
-                    log.error('users:populate', err);
-                    return res.pond(errors.serverError());
-                }
-                res.send(user);
+        var name;
+        var opts = [];
+        for (name in user.addresses) {
+          if (user.addresses.hasOwnProperty(name)) {
+            opts.push({
+              model: 'Location',
+              path: 'addresses.' + name + '.location'
             });
+          }
+        }
+        Users.populate(user, opts, function (err, user) {
+          if (err) {
+            return next(err);
+          }
+          res.send(user);
         });
+      });
     });
 
     /**
      * /users/51bfd3bd5a51f1722d000001
      */
-    router.put('/:id', validators.update, sanitizers.create, function (req, res) {
-        Users.findOneAndUpdate(req.query, req.body, {new: true}, function (err, user) {
-            if (err) {
-                log.error('users:find-one-and-update', err);
-                return res.pond(errors.serverError());
-            }
-            if (!user) {
-                return res.pond(errors.notFound())
-            }
-            //TODO: handle 404 case
-            res.send(user);
-        });
+    router.put('/:id', validators.update, sanitizers.create, function (req, res, next) {
+      mongutils.update(Users, req.query, req.body, function (err, user) {
+        if (err) {
+          return next(err);
+        }
+        res.locate(user.id).status(200).send(user);
+      });
     });
 
     /**
      * /users?data={}
      */
-    router.get('/', validators.find, function (req, res) {
+    router.get('/', validators.find, sanitizers.find, function (req, res, next) {
         mongutils.find(Users, req.query.data, function (err, users, paging) {
             if (err) {
-                log.error('users:find', err);
-                return res.pond(errors.serverError());
+                return next(err);
             }
             res.many(users, paging);
         });
     });
+
+    done();
 };

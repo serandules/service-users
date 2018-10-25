@@ -13,6 +13,13 @@ exports.find = function (req, res, next) {
   });
 };
 
+exports.findOne = function (req, res, next) {
+  validators.findOne({
+    id: req.params.id,
+    model: Users
+  }, req, res, next);
+};
+
 exports.update = function (req, res, next) {
   validators.update({
     id: req.params.id,
@@ -34,31 +41,4 @@ exports.create = function (req, res, next) {
     content: 'json',
     model: Users
   }, req, res, next);
-};
-
-exports.createOld = function (req, res, next) {
-  var data = req.body;
-  var validator = validators.types.password({
-    blocked: {
-      email: data.email
-    }
-  });
-  validator({
-    field: 'password',
-    value: data.password
-  }, function (err) {
-    if (err) {
-      console.log(err)
-      return next(err);
-    }
-    validators.create({
-      content: 'json',
-      model: Users
-    }, req, res, function (err) {
-      if (err) {
-        return res.pond(err)
-      }
-      next()
-    });
-  });
 };

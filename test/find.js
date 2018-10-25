@@ -6,26 +6,15 @@ var mongoose = require('mongoose');
 var errors = require('errors');
 
 describe('GET /users', function () {
-  var serandivesId;
   var user;
   var accessToken;
+  var client;
   before(function (done) {
-    request({
-      uri: pot.resolve('accounts', '/apis/v/configs/boot'),
-      method: 'GET',
-      json: true
-    }, function (e, r, b) {
-      if (e) {
-        return done(e);
+    pot.client(function (err, c) {
+      if (err) {
+        return done(err);
       }
-      r.statusCode.should.equal(200);
-      should.exist(b);
-      should.exist(b.name);
-      b.name.should.equal('boot');
-      should.exist(b.value);
-      should.exist(b.value.clients);
-      should.exist(b.value.clients.serandives);
-      serandivesId = b.value.clients.serandives;
+      client = c;
       request({
         uri: pot.resolve('accounts', '/apis/v/users'),
         method: 'POST',
@@ -53,7 +42,7 @@ describe('GET /users', function () {
             'X-Captcha': 'dummy'
           },
           form: {
-            client_id: serandivesId,
+            client_id: client.serandivesId,
             grant_type: 'password',
             username: 'find-user@serandives.com',
             password: '1@2.Com',
@@ -122,7 +111,7 @@ describe('GET /users', function () {
         uri: pot.resolve('accounts', '/apis/v/users'),
         method: 'GET',
         auth: {
-          bearer: admin.token.access_token
+          bearer: admin.token
         },
         json: true
       }, function (e, r, b) {

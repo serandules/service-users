@@ -6,3 +6,5 @@ nconf.overrides({
     "SERVICE_OTPS": "master:accounts:/apis/v/otps",
     "LOCAL_USERS": __dirname + "/..:accounts:/apis/v/users"
 });
+
+require('pot');

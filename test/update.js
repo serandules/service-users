@@ -8,7 +8,7 @@ var errors = require('errors');
 var Groups = require('model-groups');
 
 describe('PUT /users', function () {
-  var serandivesId;
+  var client;
   var user;
   var accessToken;
   var groups;
@@ -39,27 +39,16 @@ describe('PUT /users', function () {
   };
 
   before(function (done) {
-    pot.groups(function (err, groupz) {
+    pot.client(function (err, c) {
       if (err) {
         return done(err);
       }
-      groups = groupz;
-      request({
-        uri: pot.resolve('accounts', '/apis/v/configs/boot'),
-        method: 'GET',
-        json: true
-      }, function (e, r, b) {
-        if (e) {
-          return done(e);
+      client = c;
+      pot.groups(function (err, groupz) {
+        if (err) {
+          return done(err);
         }
-        r.statusCode.should.equal(200);
-        should.exist(b);
-        should.exist(b.name);
-        b.name.should.equal('boot');
-        should.exist(b.value);
-        should.exist(b.value.clients);
-        should.exist(b.value.clients.serandives);
-        serandivesId = b.value.clients.serandives;
+        groups = groupz;
         request({
           uri: pot.resolve('accounts', '/apis/v/users'),
           method: 'POST',
@@ -87,7 +76,7 @@ describe('PUT /users', function () {
               'X-Captcha': 'dummy'
             },
             form: {
-              client_id: serandivesId,
+              client_id: client.serandivesId,
               grant_type: 'password',
               username: 'update-user@serandives.com',
               password: pot.password(),
@@ -209,7 +198,7 @@ describe('PUT /users', function () {
       should.exist(usr.email);
       usr.id.should.equal(user.id);
       usr.email.should.equal('update-user@serandives.com');
-      usr.password = 'dummy';
+      usr.password = pot.password();
       request({
         uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
         method: 'PUT',
@@ -295,7 +284,7 @@ describe('PUT /users', function () {
               'X-Captcha': 'dummy'
             },
             form: {
-              client_id: serandivesId,
+              client_id: client.serandivesId,
               grant_type: 'password',
               username: 'update-user@serandives.com',
               password: pot.password(),
