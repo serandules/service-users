@@ -82,7 +82,6 @@ describe('POST /users', function () {
       json: {
         email: 'serandives',
         password: '1@2.Com'
-
       }
     }, function (e, r, b) {
       if (e) {

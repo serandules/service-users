@@ -1,70 +1,80 @@
 var log = require('logger')('user-service');
-var express = require('express');
 var bodyParser = require('body-parser');
 
 var errors = require('errors');
-var utils = require('utils');
 var mongutils = require('mongutils');
 var auth = require('auth');
 var throttle = require('throttle');
 var serandi = require('serandi');
 var Users = require('model-users');
-
+var model = require('model');
 var validators = require('./validators');
-var sanitizers = require('./sanitizers');
+
+var xactions = {
+  post: {
+    recover: require('./xactions/recover')
+  },
+  put: {
+    reset: require('./xactions/reset')
+  }
+};
 
 // TODO: validate email address updates through PUT. i.e. switching to a new email address should re-validate the email for ownership
 module.exports = function (router, done) {
-    router.use(serandi.many);
-    router.use(serandi.ctx);
-    router.use(auth({
-        GET: [
-            '^\/$',
-            '^\/([\/].*|$)'
-        ],
-        POST: [
-            '^\/$',
-            '^\/([\/].*|$)'
-        ]
-    }));
-    router.use(throttle.apis('users'));
-    router.use(bodyParser.json());
+  router.use(serandi.many);
+  router.use(serandi.ctx);
+  router.use(auth({
+    /*GET: [
+      '^\/$',
+      '^\/.*'
+    ],*/
+    POST: [
+      '^\/$',
+      '^\/.*'
+    ],
+    PUT: [
+      '^\/$',
+      '^\/.*'
+    ]
+  }));
+  router.use(throttle.apis('users'));
+  router.use(bodyParser.json());
 
-    /**
-     * { "email": "ruchira@serandives.com", "password": "mypassword" }
-     */
-    // TODO: sync up all vehicles changes with other modules
-    router.post('/', serandi.captcha, validators.create, sanitizers.create, function (req, res, next) {
-        Users.create(req.body, function (err, user) {
-            if (err) {
-                if (err.code === mongutils.errors.DuplicateKey) {
-                    return res.pond(errors.conflict());
-                }
-                log.error('users:create', err);
-                return res.pond(errors.serverError());
-            }
-            var permissions = user.permissions;
-            permissions.push({
-              user: user.id,
-              actions: ['read', 'update', 'delete']
-            });
-            Users.findOneAndUpdate({_id: user.id}, {
-                permissions: permissions
-            }, {new: true}).exec(function (err, user) {
-                if (err) {
-                    log.error('users:find-one-and-update', err);
-                    return res.pond(errors.serverError());
-                }
-                res.locate(user.id).status(201).send(user);
-            });
+  router.post('/',
+    serandi.json,
+    serandi.xactions(xactions.post),
+    serandi.captcha,
+    serandi.create(Users),
+    function (req, res, next) {
+      model.create(req.ctx, function (err, user) {
+        if (err) {
+          if (err.code === mongutils.errors.DuplicateKey) {
+            return res.pond(errors.conflict());
+          }
+          log.error('users:create', err);
+          return res.pond(errors.serverError());
+        }
+        var permissions = user.permissions;
+        permissions.push({
+          user: user.id,
+          actions: ['read', 'update', 'delete']
         });
+        Users.findOneAndUpdate({_id: user.id}, {
+          permissions: permissions
+        }, {new: true}).exec(function (err, user) {
+          if (err) {
+            log.error('users:find-one-and-update', err);
+            return res.pond(errors.serverError());
+          }
+          res.locate(user.id).status(201).send(user);
+        });
+      });
     });
 
-    /**
-     * /users/51bfd3bd5a51f1722d000001
-     */
-    router.get('/:id', validators.findOne, sanitizers.findOne, function (req, res, next) {
-      mongutils.findOne(Users, req.query, function (err, user) {
+  router.get('/:id',
+    serandi.findOne(Users),
+    function (req, res, next) {
+      model.findOne(req.ctx, function (err, user) {
         if (err) {
           return next(err);
         }
@@ -87,11 +97,13 @@ module.exports = function (router, done) {
       });
     });
 
-    /**
-     * /users/51bfd3bd5a51f1722d000001
-     */
-    router.put('/:id', validators.update, sanitizers.create, function (req, res, next) {
-      mongutils.update(Users, req.query, req.body, function (err, user) {
+  router.put('/:id',
+    serandi.json,
+    serandi.xactions(xactions.put),
+    serandi.update(Users),
+    validators.update,
+    function (req, res, next) {
+      model.update(req.ctx, function (err, user) {
         if (err) {
           return next(err);
         }
@@ -99,17 +111,16 @@ module.exports = function (router, done) {
       });
     });
 
-    /**
-     * /users?data={}
-     */
-    router.get('/', validators.find, sanitizers.find, function (req, res, next) {
-        mongutils.find(Users, req.query.data, function (err, users, paging) {
-            if (err) {
-                return next(err);
-            }
-            res.many(users, paging);
-        });
+  router.get('/',
+    serandi.find(Users),
+    function (req, res, next) {
+      model.find(req.ctx, function (err, users, paging) {
+        if (err) {
+          return next(err);
+        }
+        res.many(users, paging);
+      });
     });
 
-    done();
+  done();
 };

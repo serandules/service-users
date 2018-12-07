@@ -72,10 +72,11 @@ describe('GET /users', function () {
       if (e) {
         return done(e);
       }
-      r.statusCode.should.equal(200);
+      r.statusCode.should.equal(errors.unauthorized().status);
       should.exist(b);
-      should.exist(b.length);
-      b.length.should.equal(0);
+      should.exist(b.code);
+      should.exist(b.message);
+      b.code.should.equal(errors.unauthorized().data.code);
       done();
     });
   });

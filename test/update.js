@@ -18,7 +18,7 @@ describe('PUT /users', function () {
       uri: pot.resolve('accounts', '/apis/v/otps'),
       method: 'POST',
       json: {
-        name: 'password-update',
+        name: 'accounts-update',
         password: pot.password()
       },
       auth: {
@@ -210,11 +210,11 @@ describe('PUT /users', function () {
         if (e) {
           return done(e);
         }
-        r.statusCode.should.equal(errors.forbidden().status);
+        r.statusCode.should.equal(errors.unauthorized().status);
         should.exist(b);
         should.exist(b.code);
         should.exist(b.message);
-        b.code.should.equal(errors.forbidden().data.code);
+        b.code.should.equal(errors.unauthorized().data.code);
         done();
       });
     });
@@ -245,7 +245,7 @@ describe('PUT /users', function () {
           bearer: accessToken
         },
         json: {
-          name: 'password-update',
+          name: 'accounts-update',
           password: pot.password()
         }
       }, function (e, r, b) {
@@ -358,11 +358,11 @@ describe('PUT /users', function () {
           if (e) {
             return done(e);
           }
-          r.statusCode.should.equal(errors.forbidden().status);
+          r.statusCode.should.equal(errors.unauthorized().status);
           should.exist(b);
           should.exist(b.code);
           should.exist(b.message);
-          b.code.should.equal(errors.forbidden().data.code);
+          b.code.should.equal(errors.unauthorized().data.code);
           done();
         });
       });
