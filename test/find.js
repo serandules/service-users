@@ -23,7 +23,8 @@ describe('GET /users', function () {
         },
         json: {
           email: 'find-user@serandives.com',
-          password: '1@2.Com'
+          password: '1@2.Com',
+          alias: 'find-user'
         }
       }, function (e, r, b) {
         if (e) {
@@ -63,7 +64,7 @@ describe('GET /users', function () {
     });
   });
 
-  it('anonymous unauthorized', function (done) {
+  it('anonymous', function (done) {
     request({
       uri: pot.resolve('accounts', '/apis/v/users'),
       method: 'GET',
@@ -72,11 +73,13 @@ describe('GET /users', function () {
       if (e) {
         return done(e);
       }
-      r.statusCode.should.equal(errors.unauthorized().status);
-      should.exist(b);
-      should.exist(b.code);
-      should.exist(b.message);
-      b.code.should.equal(errors.unauthorized().data.code);
+      r.statusCode.should.equal(200);
+      should.exist(b.length);
+      b.forEach(function (u) {
+        should.exist(u.id);
+        should.exist(u.alias);
+        Object.keys(u).length.should.equal(2);
+      });
       done();
     });
   });
@@ -94,11 +97,18 @@ describe('GET /users', function () {
         return done(e);
       }
       r.statusCode.should.equal(200);
-      should.exist(b);
       should.exist(b.length);
-      b.length.should.equal(1);
-      should.exist(b[0].id);
-      b[0].id.should.equal(user.id);
+      var found = false;
+      b.forEach(function (u) {
+        should.exist(u.id);
+        should.exist(u.alias);
+        if (u.id === user.id) {
+          found.should.equal(false);
+          return found = true;
+        }
+        Object.keys(u).length.should.equal(2);
+      });
+      found.should.equal(true);
       done();
     });
   });

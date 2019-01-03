@@ -57,7 +57,8 @@ describe('PUT /users', function () {
           },
           json: {
             email: 'update-user@serandives.com',
-            password: pot.password()
+            password: pot.password(),
+            alias: 'update-user'
           }
         }, function (e, r, b) {
           if (e) {

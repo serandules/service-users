@@ -6,6 +6,11 @@ var Users = require('model-users');
 
 module.exports = function (route) {
   route.use(function (req, res, next) {
+    req.ctx.previleged = true;
+    next();
+  });
+
+  route.use(function (req, res, next) {
     if (!req.user) {
       return next(errors.unauthorized());
     }

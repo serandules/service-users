@@ -23,7 +23,8 @@ describe('GET /users', function () {
         },
         json: {
           email: 'findone-user@serandives.com',
-          password: '1@2.Com'
+          password: '1@2.Com',
+          alias: 'findone-user'
         }
       }, function (e, r, b) {
         if (e) {
@@ -72,11 +73,10 @@ describe('GET /users', function () {
       if (e) {
         return done(e);
       }
-      r.statusCode.should.equal(errors.unauthorized().status);
-      should.exist(b);
-      should.exist(b.code);
-      should.exist(b.message);
-      b.code.should.equal(errors.unauthorized().data.code);
+      r.statusCode.should.equal(200);
+      should.exist(b.id);
+      should.exist(b.alias);
+      Object.keys(b).length.should.equal(2);
       done();
     });
   });
@@ -99,7 +99,42 @@ describe('GET /users', function () {
       should.exist(b.email);
       b.id.should.equal(user.id);
       b.email.should.equal('findone-user@serandives.com');
-      done();
+      request({
+        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        method: 'GET',
+        json: true
+      }, function (e, r, b) {
+        if (e) {
+          return done(e);
+        }
+        r.statusCode.should.equal(200);
+        should.exist(b);
+        should.exist(b.id);
+        should.exist(b.alias);
+        Object.keys(b).length.should.equal(2);
+        request({
+          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          method: 'GET',
+          qs: {
+            data: JSON.stringify({
+              fields: {
+                alias: 1
+              }
+            })
+          },
+          json: true
+        }, function (e, r, b) {
+          if (e) {
+            return done(e);
+          }
+          r.statusCode.should.equal(200);
+          should.exist(b);
+          should.exist(b.id);
+          should.exist(b.alias);
+          b.id.should.equal(user.id);
+          done();
+        });
+      });
     });
   });
 });

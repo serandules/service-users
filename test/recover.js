@@ -26,7 +26,8 @@ describe('POST /users (recover)', function () {
         },
         json: {
           email: 'test-recover-user@serandives.com',
-          password: '1@2.Com'
+          password: '1@2.Com',
+          alias: 'test-recover-user'
         }
       }, function (e, r, b) {
         if (e) {
@@ -138,7 +139,7 @@ describe('POST /users (recover)', function () {
     });
   });
 
-  it.only('successful', function (done) {
+  it('successful', function (done) {
     request({
       uri: pot.resolve('accounts', '/apis/v/users'),
       method: 'POST',
