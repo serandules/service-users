@@ -49,51 +49,17 @@ describe('PUT /users', function () {
           return done(err);
         }
         groups = groupz;
-        request({
-          uri: pot.resolve('accounts', '/apis/v/users'),
-          method: 'POST',
-          headers: {
-            'X-Captcha': 'dummy'
-          },
-          json: {
-            email: 'update-user@serandives.com',
-            password: pot.password(),
-            alias: 'update-user'
+        pot.createUser(c.serandivesId, {
+          email: 'update-user@serandives.com',
+          password: pot.password(),
+          alias: 'update-user'
+        }, function (err, usr, token) {
+          if (err) {
+            return done(err);
           }
-        }, function (e, r, b) {
-          if (e) {
-            return done(e);
-          }
-          r.statusCode.should.equal(201);
-          should.exist(b);
-          should.exist(b.id);
-          should.exist(b.email);
-          b.email.should.equal('update-user@serandives.com');
-          user = b;
-          request({
-            uri: pot.resolve('accounts', '/apis/v/tokens'),
-            method: 'POST',
-            headers: {
-              'X-Captcha': 'dummy'
-            },
-            form: {
-              client_id: client.serandivesId,
-              grant_type: 'password',
-              username: 'update-user@serandives.com',
-              password: pot.password(),
-              redirect_uri: pot.resolve('accounts', '/auth')
-            },
-            json: true
-          }, function (e, r, b) {
-            if (e) {
-              return done(e);
-            }
-            r.statusCode.should.equal(200);
-            should.exist(b.access_token);
-            should.exist(b.refresh_token);
-            accessToken = b.access_token;
-            done();
-          });
+          user = usr;
+          accessToken = token.access_token;
+          done();
         });
       });
     });

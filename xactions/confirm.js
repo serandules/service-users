@@ -15,16 +15,14 @@ module.exports = function (route) {
       return next(errors.unauthorized());
     }
     serandi.otp({
-      name: 'accounts-recovery',
+      name: 'accounts-confirm',
       user: req.params.id
     })(req, res, next);
   });
 
   route.use(function (req, res, next) {
-    var user = _.defaults(req.body, req.user.toJSON());
-    if (user._ && user._.blocked) {
-      delete user._.blocked;
-    }
+    var user = req.user.toJSON();
+    delete user.password;
     req.body = user;
     next();
   });

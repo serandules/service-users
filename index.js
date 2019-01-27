@@ -1,22 +1,36 @@
 var log = require('logger')('user-service');
 var bodyParser = require('body-parser');
+var dust = require('dustjs-linkedin');
+var path = require('path');
+var util = require('util');
+var fs = require('fs');
 
 var errors = require('errors');
 var mongutils = require('mongutils');
+var messenger = require('messenger');
 var auth = require('auth');
 var utils = require('utils');
 var throttle = require('throttle');
 var serandi = require('serandi');
 var Users = require('model-users');
+var Otps = require('model-otps');
 var model = require('model');
 var validators = require('./validators');
+
+var template = function (name) {
+  var data = fs.readFileSync(path.join(__dirname, 'templates', name + '.html'));
+  dust.loadSource(dust.compile(String(data), 'service-users-' + name));
+};
+
+template('signup');
 
 var xactions = {
   post: {
     recover: require('./xactions/recover')
   },
   put: {
-    reset: require('./xactions/reset')
+    reset: require('./xactions/reset'),
+    confirm: require('./xactions/confirm')
   }
 };
 
@@ -58,42 +72,73 @@ module.exports = function (router, done) {
           model.create(req.ctx, function (err, user) {
             if (err) {
               if (err.code === mongutils.errors.DuplicateKey) {
-                return res.pond(errors.conflict());
+                return next(errors.conflict());
               }
-              log.error('users:create', err);
-              return res.pond(errors.serverError());
+              return next(err);
             }
-
-            var permissions = user.permissions;
-            permissions.push({
-              user: user.id,
-              actions: ['read', 'update', 'delete']
-            });
-            permissions.push({
-              group: pub.id,
-              actions: ['read']
-            });
-            permissions.push({
-              group: anon.id,
-              actions: ['read']
-            });
-
-            var visibility = user.visibility;
-            var all = visibility['*'];
-            all.users.push(user.id);
-            var alias = visibility['alias'] || (visibility['alias'] = {groups: []});
-            alias.groups.push(pub.id);
-            alias.groups.push(anon.id);
-
-            Users.findOneAndUpdate({_id: user.id}, {
-              permissions: permissions,
-              visibility: visibility
-            }, {new: true}).exec(function (err, user) {
+            utils.group('public', function (err, pub) {
               if (err) {
-                log.error('users:find-one-and-update', err);
-                return res.pond(errors.serverError());
+                return next(err);
               }
-              res.locate(user.id).status(201).send(user);
+              utils.group('anonymous', function (err, anon) {
+                if (err) {
+                  return next(err);
+                }
+                var usr = user.toJSON();
+
+                utils.permit(usr, 'user', usr.id, ['read', 'update', 'delete']);
+                utils.permit(usr, 'group', pub.id, 'read');
+                utils.permit(usr, 'group', anon.id, 'read');
+
+                utils.visible(usr, 'users', usr.id, '*');
+                utils.visible(usr, 'groups', pub.id, 'alias');
+                utils.visible(usr, 'groups', anon.id, 'alias');
+
+                Users.findOneAndUpdate({_id: usr.id}, {
+                  permissions: usr.permissions,
+                  visibility: usr.visibility,
+                  _: {
+                    blocked: true
+                  }
+                }).exec(function (err) {
+                  if (err) {
+                    return next(err);
+                  }
+                  model.create({
+                    user: user,
+                    model: Otps,
+                    data: {
+                      name: 'accounts-confirm'
+                    }
+                  }, function (err, otp) {
+                    if (err) {
+                      return next(err);
+                    }
+                    var ctx = {
+                      user: user,
+                      title: 'Welcome to Serandives',
+                      confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
+                    };
+                    dust.render('service-users-signup', ctx, function (err, html) {
+                      if (err) {
+                        return next(err);
+                      }
+                      messenger.email({
+                        from: 'Serandives <no-reply@serandives.com>',
+                        to: user.email,
+                        subject: ctx.title,
+                        html: html,
+                        text: html
+                      }, function (err) {
+                        if (err) {
+                          return next(err);
+                        }
+                        res.locate(user.id).status(201).send(user);
+                      });
+                    });
+                  });
+                });
+              });
             });
           });
         });
