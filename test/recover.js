@@ -131,7 +131,7 @@ describe('POST /users (recover)', function () {
           return done(err);
         }
         Otps.findOne({
-          name: 'accounts-recovery',
+          name: 'accounts-update',
           user: user.id
         }, function (err, otp) {
           if (err) {

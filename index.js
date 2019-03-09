@@ -172,7 +172,6 @@ module.exports = function (router, done) {
       router.put('/:id',
         serandi.json,
         serandi.xactions(xactions.put),
-        serandi.update(Users),
         validators.update,
         function (req, res, next) {
           model.update(req.ctx, function (err, user) {

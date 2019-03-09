@@ -335,4 +335,62 @@ describe('PUT /users', function () {
       });
     });
   });
+
+  it('email address update blocked', function (done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      method: 'GET',
+      auth: {
+        bearer: accessToken
+      },
+      json: true
+    }, function (e, r, usr) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(200);
+      should.exist(usr);
+      should.exist(usr.id);
+      should.exist(usr.email);
+      usr.id.should.equal(user.id);
+      usr.email.should.equal('update-user@serandives.com');
+      usr.email = 'other@serandives.com';
+      request({
+        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        method: 'PUT',
+        auth: {
+          bearer: accessToken
+        },
+        json: usr
+      }, function (e, r, b) {
+        if (e) {
+          return done(e);
+        }
+        r.statusCode.should.equal(errors.forbidden().status);
+        should.exist(b);
+        should.exist(b.code);
+        should.exist(b.message);
+        b.code.should.equal(errors.forbidden().data.code);
+        request({
+          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          method: 'GET',
+          auth: {
+            bearer: accessToken
+          },
+          json: true
+        }, function (e, r, usr) {
+          if (e) {
+            return done(e);
+          }
+          r.statusCode.should.equal(200);
+          should.exist(usr);
+          should.exist(usr.id);
+          should.exist(usr.email);
+          usr.id.should.equal(user.id);
+          usr.email.should.equal('update-user@serandives.com');
+          done();
+        });
+      });
+    });
+  });
 });

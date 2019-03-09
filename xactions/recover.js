@@ -20,7 +20,7 @@ template('recover');
 var recover = function (user, done) {
   Otps.remove({
     user: user.id,
-    name: 'accounts-recovery'
+    name: 'accounts-update'
   }, function (err) {
     if (err) {
       return done(err);
@@ -29,7 +29,7 @@ var recover = function (user, done) {
       user: user,
       model: Otps,
       data: {
-        name: 'accounts-recovery'
+        name: 'accounts-update'
       }
     }, function (err, otp) {
       if (err) {
