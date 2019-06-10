@@ -45,7 +45,6 @@ describe('POST /users (recover)', function () {
       if (e) {
         return done(e);
       }
-      console.log(b)
       r.statusCode.should.equal(errors.unsupportedMedia().status);
       should.exist(b);
       should.exist(b.code);

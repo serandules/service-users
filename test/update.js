@@ -393,4 +393,42 @@ describe('PUT /users', function () {
       });
     });
   });
+
+  it('user is not changed when updated by another user', function (done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      method: 'GET',
+      auth: {
+        bearer: accessToken
+      },
+      json: true
+    }, function (e, r, usr) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(200);
+      should.exist(usr);
+      should.exist(usr.id);
+      should.exist(usr.email);
+      request({
+        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        method: 'PUT',
+        auth: {
+          bearer: client.admin.token
+        },
+        json: usr
+      }, function (e, r, b) {
+        if (e) {
+          return done(e);
+        }
+        r.statusCode.should.equal(200);
+        should.exist(usr);
+        should.exist(usr.id);
+        should.exist(usr.email);
+        usr.id.should.equal(user.id);
+        usr.email.should.equal('update-user@serandives.com');
+        done();
+      });
+    });
+  });
 });
