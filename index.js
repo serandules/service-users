@@ -76,64 +76,58 @@ module.exports = function (router, done) {
               }
               return next(err);
             }
-            utils.group('public', function (err, pub) {
+            utils.workflow('model-users', function (err, workflow) {
               if (err) {
                 return next(err);
               }
-              utils.group('anonymous', function (err, anon) {
+              var permit = workflow.permits[workflow.start];
+              var usr = utils.json(user);
+              utils.toPermissions(usr.id, permit, function (err, permissions) {
                 if (err) {
                   return next(err);
                 }
-                var usr = user.toJSON();
-
-                utils.permit(usr, 'user', usr.id, ['read', 'update', 'delete']);
-                utils.permit(usr, 'group', pub.id, 'read');
-                utils.permit(usr, 'group', anon.id, 'read');
-
-                utils.visible(usr, 'users', usr.id, '*');
-                utils.visible(usr, 'groups', pub.id, 'alias');
-                utils.visible(usr, 'groups', anon.id, 'alias');
-
-                Users.findOneAndUpdate({_id: usr.id}, {
-                  permissions: usr.permissions,
-                  visibility: usr.visibility,
-                  _: {
-                    blocked: true
-                  }
-                }).exec(function (err) {
+                utils.toVisibility(usr.id, permit, function (err, visibility) {
                   if (err) {
                     return next(err);
                   }
-                  model.create({
-                    user: user,
-                    model: Otps,
-                    data: {
-                      name: 'accounts-confirm'
-                    }
-                  }, function (err, otp) {
+                  Users.findOneAndUpdate({_id: usr.id}, {
+                    permissions: permissions,
+                    visibility: visibility
+                  }).exec(function (err) {
                     if (err) {
                       return next(err);
                     }
-                    var ctx = {
+                    model.create({
                       user: user,
-                      title: 'Welcome to Serandives',
-                      confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
-                    };
-                    dust.render('service-users-signup', ctx, function (err, html) {
+                      model: Otps,
+                      data: {
+                        name: 'accounts-confirm'
+                      }
+                    }, function (err, otp) {
                       if (err) {
                         return next(err);
                       }
-                      messenger.email({
-                        from: 'Serandives <no-reply@serandives.com>',
-                        to: user.email,
-                        subject: ctx.title,
-                        html: html,
-                        text: html
-                      }, function (err) {
+                      var ctx = {
+                        user: user,
+                        title: 'Welcome to Serandives',
+                        confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
+                      };
+                      dust.render('service-users-signup', ctx, function (err, html) {
                         if (err) {
                           return next(err);
                         }
-                        res.locate(user.id).status(201).send(user);
+                        messenger.email({
+                          from: 'Serandives <no-reply@serandives.com>',
+                          to: user.email,
+                          subject: ctx.title,
+                          html: html,
+                          text: html
+                        }, function (err) {
+                          if (err) {
+                            return next(err);
+                          }
+                          res.locate(user.id).status(201).send(user);
+                        });
                       });
                     });
                   });

@@ -2,6 +2,7 @@ var _ = require('lodash');
 var errors = require('errors');
 var serandi = require('serandi');
 var model = require('model');
+var utils = require('utils');
 var validators = require('../validators');
 
 module.exports = function (route) {
@@ -21,10 +22,13 @@ module.exports = function (route) {
   });
 
   route.use(function (req, res, next) {
-    var user = _.defaults(req.body, req.user.toJSON());
-    if (user._ && user._.blocked) {
-      delete user._.blocked;
+    var user = _.defaults(req.body, utils.json(req.user));
+    if (!utils.permitted(user, user, 'recover')) {
+      return next(errors.unauthorized());
     }
+    var ctx = req.ctx;
+    var overrides = ctx.overrides;
+    overrides.status = 'registered';
     req.body = user;
     next();
   });
