@@ -5,7 +5,7 @@ var pot = require('pot');
 var mongoose = require('mongoose');
 var errors = require('errors');
 
-describe('GET /users', function () {
+describe('GET /users/:id', function () {
   var user;
   var accessToken;
   var client;
