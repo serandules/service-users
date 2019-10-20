@@ -13,7 +13,7 @@
     "mongoose": "5.1.8",
     "express": "4.*",
     "body-parser": "1.17.1",
-    "lodash": "4.17.4",
+    "lodash": "4.17.15",
     "dustjs-linkedin": "2.7.5",
     "logger": "serandules/logger#master",
     "utils": "serandules/utils#master",
