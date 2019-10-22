@@ -37,7 +37,7 @@ var recover = function (user, done) {
       }
       var ctx = {
         user: user,
-        title: 'Welcome to Serandives',
+        title: 'Welcome',
         reset: utils.resolve(util.format('accounts:///reset?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
       };
       dust.render('service-users-recover', ctx, function (err, html) {

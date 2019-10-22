@@ -1,917 +1,793 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style type="text/css">
-        body {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            margin:0 !important;
-            width: 100% !important;
-            -webkit-text-size-adjust: 100% !important;
-            -ms-text-size-adjust: 100% !important;
-            -webkit-font-smoothing: antialiased !important;
-        }
-        .tableContent img {
-            border: 0 !important;
-            display: block !important;
-            outline: none !important;
-        }
-        a{
-            color:#382F2E;
+        .ExternalClass {
+            width: 100%
         }
 
-        p, h1,h2,ul,ol,li,div{
-            margin:0;
-            padding:0;
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 150%
         }
 
-        h1,h2{
-            font-weight: normal;
-            background:transparent !important;
-            border:none !important;
+        a {
+            text-decoration: none
         }
 
-        @media only screen and (max-width:480px)
-
-        {
-
-            table[class="MainContainer"], td[class="cell"]
-            {
-                width: 100% !important;
-                height:auto !important;
-            }
-            td[class="specbundle"]
-            {
-                width: 100% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:15px !important;
-            }
-            td[class="specbundle2"]
-            {
-                width:80% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:10px !important;
-                padding-left:10% !important;
-                padding-right:10% !important;
+        @media screen and (max-width: 600px) {
+            table.row th.col-lg-1, table.row th.col-lg-2, table.row th.col-lg-3, table.row th.col-lg-4, table.row th.col-lg-5, table.row th.col-lg-6, table.row th.col-lg-7, table.row th.col-lg-8, table.row th.col-lg-9, table.row th.col-lg-10, table.row th.col-lg-11, table.row th.col-lg-12 {
+                display: block;
+                width: 100% !important
             }
 
-            td[class="spechide"]
-            {
-                display:none !important;
-            }
-            img[class="banner"]
-            {
-                width: 100% !important;
-                height: auto !important;
-            }
-            td[class="left_pad"]
-            {
-                padding-left:15px !important;
-                padding-right:15px !important;
+            .d-mobile {
+                display: block !important
             }
 
-        }
-
-        @media only screen and (max-width:540px)
-
-        {
-
-            table[class="MainContainer"], td[class="cell"]
-            {
-                width: 100% !important;
-                height:auto !important;
-            }
-            td[class="specbundle"]
-            {
-                width: 100% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:15px !important;
-            }
-            td[class="specbundle2"]
-            {
-                width:80% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:10px !important;
-                padding-left:10% !important;
-                padding-right:10% !important;
+            .d-desktop {
+                display: none !important
             }
 
-            td[class="spechide"]
-            {
-                display:none !important;
-            }
-            img[class="banner"]
-            {
-                width: 100% !important;
-                height: auto !important;
-            }
-            td[class="left_pad"]
-            {
-                padding-left:15px !important;
-                padding-right:15px !important;
+            .w-lg-25 {
+                width: auto !important
             }
 
+            .w-lg-25 > tbody > tr > td {
+                width: auto !important
+            }
+
+            .w-lg-50 {
+                width: auto !important
+            }
+
+            .w-lg-50 > tbody > tr > td {
+                width: auto !important
+            }
+
+            .w-lg-75 {
+                width: auto !important
+            }
+
+            .w-lg-75 > tbody > tr > td {
+                width: auto !important
+            }
+
+            .w-lg-100 {
+                width: auto !important
+            }
+
+            .w-lg-100 > tbody > tr > td {
+                width: auto !important
+            }
+
+            .w-lg-auto {
+                width: auto !important
+            }
+
+            .w-lg-auto > tbody > tr > td {
+                width: auto !important
+            }
+
+            .w-25 {
+                width: 25% !important
+            }
+
+            .w-25 > tbody > tr > td {
+                width: 25% !important
+            }
+
+            .w-50 {
+                width: 50% !important
+            }
+
+            .w-50 > tbody > tr > td {
+                width: 50% !important
+            }
+
+            .w-75 {
+                width: 75% !important
+            }
+
+            .w-75 > tbody > tr > td {
+                width: 75% !important
+            }
+
+            .w-100 {
+                width: 100% !important
+            }
+
+            .w-100 > tbody > tr > td {
+                width: 100% !important
+            }
+
+            .w-auto {
+                width: auto !important
+            }
+
+            .w-auto > tbody > tr > td {
+                width: auto !important
+            }
+
+            .p-lg-0 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-0 > tbody > tr > td, .py-lg-0 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-0 > tbody > tr > td, .px-lg-0 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-0 > tbody > tr > td, .py-lg-0 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-0 > tbody > tr > td, .px-lg-0 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-1 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-1 > tbody > tr > td, .py-lg-1 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-1 > tbody > tr > td, .px-lg-1 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-1 > tbody > tr > td, .py-lg-1 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-1 > tbody > tr > td, .px-lg-1 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-2 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-2 > tbody > tr > td, .py-lg-2 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-2 > tbody > tr > td, .px-lg-2 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-2 > tbody > tr > td, .py-lg-2 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-2 > tbody > tr > td, .px-lg-2 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-3 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-3 > tbody > tr > td, .py-lg-3 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-3 > tbody > tr > td, .px-lg-3 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-3 > tbody > tr > td, .py-lg-3 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-3 > tbody > tr > td, .px-lg-3 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-4 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-4 > tbody > tr > td, .py-lg-4 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-4 > tbody > tr > td, .px-lg-4 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-4 > tbody > tr > td, .py-lg-4 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-4 > tbody > tr > td, .px-lg-4 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-5 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-lg-5 > tbody > tr > td, .py-lg-5 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-5 > tbody > tr > td, .px-lg-5 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-5 > tbody > tr > td, .py-lg-5 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-5 > tbody > tr > td, .px-lg-5 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-0 > tbody > tr > td {
+                padding: 0 !important
+            }
+
+            .pt-0 > tbody > tr > td, .py-0 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-0 > tbody > tr > td, .px-0 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-0 > tbody > tr > td, .py-0 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-0 > tbody > tr > td, .px-0 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-1 > tbody > tr > td {
+                padding: 4px !important
+            }
+
+            .pt-1 > tbody > tr > td, .py-1 > tbody > tr > td {
+                padding-top: 4px !important
+            }
+
+            .pr-1 > tbody > tr > td, .px-1 > tbody > tr > td {
+                padding-right: 4px !important
+            }
+
+            .pb-1 > tbody > tr > td, .py-1 > tbody > tr > td {
+                padding-bottom: 4px !important
+            }
+
+            .pl-1 > tbody > tr > td, .px-1 > tbody > tr > td {
+                padding-left: 4px !important
+            }
+
+            .p-2 > tbody > tr > td {
+                padding: 8px !important
+            }
+
+            .pt-2 > tbody > tr > td, .py-2 > tbody > tr > td {
+                padding-top: 8px !important
+            }
+
+            .pr-2 > tbody > tr > td, .px-2 > tbody > tr > td {
+                padding-right: 8px !important
+            }
+
+            .pb-2 > tbody > tr > td, .py-2 > tbody > tr > td {
+                padding-bottom: 8px !important
+            }
+
+            .pl-2 > tbody > tr > td, .px-2 > tbody > tr > td {
+                padding-left: 8px !important
+            }
+
+            .p-3 > tbody > tr > td {
+                padding: 16px !important
+            }
+
+            .pt-3 > tbody > tr > td, .py-3 > tbody > tr > td {
+                padding-top: 16px !important
+            }
+
+            .pr-3 > tbody > tr > td, .px-3 > tbody > tr > td {
+                padding-right: 16px !important
+            }
+
+            .pb-3 > tbody > tr > td, .py-3 > tbody > tr > td {
+                padding-bottom: 16px !important
+            }
+
+            .pl-3 > tbody > tr > td, .px-3 > tbody > tr > td {
+                padding-left: 16px !important
+            }
+
+            .p-4 > tbody > tr > td {
+                padding: 24px !important
+            }
+
+            .pt-4 > tbody > tr > td, .py-4 > tbody > tr > td {
+                padding-top: 24px !important
+            }
+
+            .pr-4 > tbody > tr > td, .px-4 > tbody > tr > td {
+                padding-right: 24px !important
+            }
+
+            .pb-4 > tbody > tr > td, .py-4 > tbody > tr > td {
+                padding-bottom: 24px !important
+            }
+
+            .pl-4 > tbody > tr > td, .px-4 > tbody > tr > td {
+                padding-left: 24px !important
+            }
+
+            .p-5 > tbody > tr > td {
+                padding: 48px !important
+            }
+
+            .pt-5 > tbody > tr > td, .py-5 > tbody > tr > td {
+                padding-top: 48px !important
+            }
+
+            .pr-5 > tbody > tr > td, .px-5 > tbody > tr > td {
+                padding-right: 48px !important
+            }
+
+            .pb-5 > tbody > tr > td, .py-5 > tbody > tr > td {
+                padding-bottom: 48px !important
+            }
+
+            .pl-5 > tbody > tr > td, .px-5 > tbody > tr > td {
+                padding-left: 48px !important
+            }
+
+            .s-lg-1 > tbody > tr > td, .s-lg-2 > tbody > tr > td, .s-lg-3 > tbody > tr > td, .s-lg-4 > tbody > tr > td, .s-lg-5 > tbody > tr > td {
+                font-size: 0 !important;
+                line-height: 0 !important;
+                height: 0 !important
+            }
+
+            .s-0 > tbody > tr > td {
+                font-size: 0 !important;
+                line-height: 0 !important;
+                height: 0 !important
+            }
+
+            .s-1 > tbody > tr > td {
+                font-size: 4px !important;
+                line-height: 4px !important;
+                height: 4px !important
+            }
+
+            .s-2 > tbody > tr > td {
+                font-size: 8px !important;
+                line-height: 8px !important;
+                height: 8px !important
+            }
+
+            .s-3 > tbody > tr > td {
+                font-size: 16px !important;
+                line-height: 16px !important;
+                height: 16px !important
+            }
+
+            .s-4 > tbody > tr > td {
+                font-size: 24px !important;
+                line-height: 24px !important;
+                height: 24px !important
+            }
+
+            .s-5 > tbody > tr > td {
+                font-size: 48px !important;
+                line-height: 48px !important;
+                height: 48px !important
+            }
         }
 
-        .contentEditable h2.big,.contentEditable h1.big{
-            font-size: 26px !important;
-        }
+        @media yahoo {
+            .d-mobile {
+                display: none !important
+            }
 
-        .contentEditable h2.bigger,.contentEditable h1.bigger{
-            font-size: 37px !important;
-        }
+            .d-desktop {
+                display: block !important
+            }
 
-        td,table{
-            vertical-align: top;
-        }
-        td.middle{
-            vertical-align: middle;
-        }
+            .w-lg-25 {
+                width: 25% !important
+            }
 
-        a.link1{
-            font-size:13px;
-            color:#27A1E5;
-            line-height: 24px;
-            text-decoration:none;
-        }
-        a{
-            text-decoration: none;
-        }
+            .w-lg-25 > tbody > tr > td {
+                width: 25% !important
+            }
 
-        .link2{
-            color:#ffffff;
-            border-top:10px solid #27A1E5;
-            border-bottom:10px solid #27A1E5;
-            border-left:18px solid #27A1E5;
-            border-right:18px solid #27A1E5;
-            border-radius:3px;
-            -moz-border-radius:3px;
-            -webkit-border-radius:3px;
-            background:#27A1E5;
-        }
+            .w-lg-50 {
+                width: 50% !important
+            }
 
-        .link3{
-            color:#555555;
-            border:1px solid #cccccc;
-            padding:10px 18px;
-            border-radius:3px;
-            -moz-border-radius:3px;
-            -webkit-border-radius:3px;
-            background:#ffffff;
-        }
+            .w-lg-50 > tbody > tr > td {
+                width: 50% !important
+            }
 
-        .link4{
-            color:#27A1E5;
-            line-height: 24px;
-        }
+            .w-lg-75 {
+                width: 75% !important
+            }
 
-        h2,h1{
-            line-height: 20px;
-        }
-        p{
-            font-size: 14px;
-            line-height: 21px;
-            color:#AAAAAA;
-        }
+            .w-lg-75 > tbody > tr > td {
+                width: 75% !important
+            }
 
-        .contentEditable li{
+            .w-lg-100 {
+                width: 100% !important
+            }
 
-        }
+            .w-lg-100 > tbody > tr > td {
+                width: 100% !important
+            }
 
-        .appart p{
+            .w-lg-auto {
+                width: auto !important
+            }
 
-        }
-        .bgItem{
-            background: #ffffff;
-        }
-        .bgBody{
-            background: #ffffff;
-        }
+            .w-lg-auto > tbody > tr > td {
+                width: auto !important
+            }
 
-        img {
-            outline:none;
-            text-decoration:none;
-            -ms-interpolation-mode: bicubic;
-            width: auto;
-            max-width: 100%;
-            clear: both;
-            display: block;
-            float: none;
-        }
+            .p-lg-0 > tbody > tr > td {
+                padding: 0 !important
+            }
 
+            .pt-lg-0 > tbody > tr > td, .py-lg-0 > tbody > tr > td {
+                padding-top: 0 !important
+            }
+
+            .pr-lg-0 > tbody > tr > td, .px-lg-0 > tbody > tr > td {
+                padding-right: 0 !important
+            }
+
+            .pb-lg-0 > tbody > tr > td, .py-lg-0 > tbody > tr > td {
+                padding-bottom: 0 !important
+            }
+
+            .pl-lg-0 > tbody > tr > td, .px-lg-0 > tbody > tr > td {
+                padding-left: 0 !important
+            }
+
+            .p-lg-1 > tbody > tr > td {
+                padding: 4px !important
+            }
+
+            .pt-lg-1 > tbody > tr > td, .py-lg-1 > tbody > tr > td {
+                padding-top: 4px !important
+            }
+
+            .pr-lg-1 > tbody > tr > td, .px-lg-1 > tbody > tr > td {
+                padding-right: 4px !important
+            }
+
+            .pb-lg-1 > tbody > tr > td, .py-lg-1 > tbody > tr > td {
+                padding-bottom: 4px !important
+            }
+
+            .pl-lg-1 > tbody > tr > td, .px-lg-1 > tbody > tr > td {
+                padding-left: 4px !important
+            }
+
+            .p-lg-2 > tbody > tr > td {
+                padding: 8px !important
+            }
+
+            .pt-lg-2 > tbody > tr > td, .py-lg-2 > tbody > tr > td {
+                padding-top: 8px !important
+            }
+
+            .pr-lg-2 > tbody > tr > td, .px-lg-2 > tbody > tr > td {
+                padding-right: 8px !important
+            }
+
+            .pb-lg-2 > tbody > tr > td, .py-lg-2 > tbody > tr > td {
+                padding-bottom: 8px !important
+            }
+
+            .pl-lg-2 > tbody > tr > td, .px-lg-2 > tbody > tr > td {
+                padding-left: 8px !important
+            }
+
+            .p-lg-3 > tbody > tr > td {
+                padding: 16px !important
+            }
+
+            .pt-lg-3 > tbody > tr > td, .py-lg-3 > tbody > tr > td {
+                padding-top: 16px !important
+            }
+
+            .pr-lg-3 > tbody > tr > td, .px-lg-3 > tbody > tr > td {
+                padding-right: 16px !important
+            }
+
+            .pb-lg-3 > tbody > tr > td, .py-lg-3 > tbody > tr > td {
+                padding-bottom: 16px !important
+            }
+
+            .pl-lg-3 > tbody > tr > td, .px-lg-3 > tbody > tr > td {
+                padding-left: 16px !important
+            }
+
+            .p-lg-4 > tbody > tr > td {
+                padding: 24px !important
+            }
+
+            .pt-lg-4 > tbody > tr > td, .py-lg-4 > tbody > tr > td {
+                padding-top: 24px !important
+            }
+
+            .pr-lg-4 > tbody > tr > td, .px-lg-4 > tbody > tr > td {
+                padding-right: 24px !important
+            }
+
+            .pb-lg-4 > tbody > tr > td, .py-lg-4 > tbody > tr > td {
+                padding-bottom: 24px !important
+            }
+
+            .pl-lg-4 > tbody > tr > td, .px-lg-4 > tbody > tr > td {
+                padding-left: 24px !important
+            }
+
+            .p-lg-5 > tbody > tr > td {
+                padding: 48px !important
+            }
+
+            .pt-lg-5 > tbody > tr > td, .py-lg-5 > tbody > tr > td {
+                padding-top: 48px !important
+            }
+
+            .pr-lg-5 > tbody > tr > td, .px-lg-5 > tbody > tr > td {
+                padding-right: 48px !important
+            }
+
+            .pb-lg-5 > tbody > tr > td, .py-lg-5 > tbody > tr > td {
+                padding-bottom: 48px !important
+            }
+
+            .pl-lg-5 > tbody > tr > td, .px-lg-5 > tbody > tr > td {
+                padding-left: 48px !important
+            }
+
+            .s-lg-0 > tbody > tr > td {
+                font-size: 0 !important;
+                line-height: 0 !important;
+                height: 0 !important
+            }
+
+            .s-lg-1 > tbody > tr > td {
+                font-size: 4px !important;
+                line-height: 4px !important;
+                height: 4px !important
+            }
+
+            .s-lg-2 > tbody > tr > td {
+                font-size: 8px !important;
+                line-height: 8px !important;
+                height: 8px !important
+            }
+
+            .s-lg-3 > tbody > tr > td {
+                font-size: 16px !important;
+                line-height: 16px !important;
+                height: 16px !important
+            }
+
+            .s-lg-4 > tbody > tr > td {
+                font-size: 24px !important;
+                line-height: 24px !important;
+                height: 24px !important
+            }
+
+            .s-lg-5 > tbody > tr > td {
+                font-size: 48px !important;
+                line-height: 48px !important;
+                height: 48px !important
+            }
+        }
     </style>
-
-
-    <script type="colorScheme" class="swatch active">
-{
-    "name":"Default",
-    "bgBody":"ffffff",
-    "link":"27A1E5",
-    "color":"AAAAAA",
-    "bgItem":"ffffff",
-    "title":"444444"
-}
-</script>
-
-
 </head>
-<body paddingwidth="0" paddingheight="0" bgcolor="#d1d3d4"  style="padding-top: 0; padding-bottom: 0; padding-top: 0; padding-bottom: 0; background-repeat: repeat; width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;" offset="0" toppadding="0" leftpadding="0">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- Edit the code below this line -->
+<body style="outline: 0; width: 100%; min-width: 100%; height: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; font-family: Helvetica, Arial, sans-serif; line-height: 24px; font-weight: normal; font-size: 16px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; margin: 0; padding: 0; border: 0;">
+<div class="preview" style="display: none; max-height: 0px; overflow: hidden;">
+    Recover your serandives.com account                                                                     
+</div>
+<table valign="top" class="bg-light body"
+       style="outline: 0; width: 100%; min-width: 100%; height: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; font-family: Helvetica, Arial, sans-serif; line-height: 24px; font-weight: normal; font-size: 16px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse; margin: 0; padding: 0; border: 0;">
     <tbody>
     <tr>
-        <td><table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff" style="font-family:helvetica, sans-serif;" class="MainContainer">
-            <!-- =============== START HEADER =============== -->
-            <tbody>
-            <tr>
-                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tbody>
-                    <tr>
-                        <td valign="top" width="20">&nbsp;</td>
-                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <td valign="top"
+            style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; margin: 0;"
+            align="left">
+            <table class="container" border="0" cellpadding="0" cellspacing="0"
+                   style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse; width: 100%;">
+                <tbody>
+                <tr>
+                    <td align="center"
+                        style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; margin: 0; padding: 0 16px;">
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align="center">
                             <tbody>
                             <tr>
-                                <td class="movableContentContainer">
-                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <td width="600">
+                        <![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0"
+                               style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
+                            <tbody>
+                            <tr>
+                                <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; margin: 0;"
+                                    align="left">
+                                    <table class="s-2 w-100" border="0" cellpadding="0" cellspacing="0"
+                                           style="width: 100%;">
+                                        <tbody>
+                                        <tr>
+                                            <td height="8"
+                                                style="border-spacing: 0px; border-collapse: collapse; line-height: 8px; font-size: 8px; width: 100%; height: 8px; margin: 0;"
+                                                align="left">
+                                                 
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="  text-muted" style="color: #636c72;">
+                                        <table class="float-left" align="left" border="0" cellpadding="0"
+                                               cellspacing="0"
+                                               style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse;">
                                             <tbody>
                                             <tr>
-                                                <td height="15"></td>
+                                                <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; margin: 0;"
+                                                    align="left">
+                                                    <img class="" width="25" height="25"
+                                                         src="https://d2wwbq608e82yj.cloudfront.net/logo/master/logo.png"
+                                                         style="height: auto; line-height: 100%; outline: none; text-decoration: none; border: 0 none;">
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td valign="top" width="60"><img src="https://d2wwbq608e82yj.cloudfront.net/logo/master/logo.png" alt="Logo" title="Logo" width="60" height="60" data-max-width="100"></td>
-                                                                <td width="10" valign="top">&nbsp;</td>
-                                                                <td valign="middle" style='vertical-align: middle;'>
-                                                                    <div class='contentEditableContainer contentTextEditable'>
-                                                                        <div class='contentEditable' style='text-align: left;font-weight: light; color:#555555;font-size:26;line-height: 39px;font-family: Helvetica Neue;'>
-                                                                            <h1 class='big'><a target='_blank' href="https://serandives.com" style='color:#444444'>serandives</a></h1>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        </td>
-                                                        <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                        <td valign="middle" style='vertical-align: middle;' width='150'>
-                                                            <div class='contentEditableContainer contentTextEditable'>
-                                                                <div class='contentEditable' style='text-align: right;'>
-                                                                    <!--<a target='_blank' href="[SHOWEMAIL]" class='link1' >Open in your browser</a>-->
+                                            </tbody>
+                                        </table>
+                                        serandives
+                                    </div>
+                                    <table class="s-2 w-100" border="0" cellpadding="0" cellspacing="0"
+                                           style="width: 100%;">
+                                        <tbody>
+                                        <tr>
+                                            <td height="8"
+                                                style="border-spacing: 0px; border-collapse: collapse; line-height: 8px; font-size: 8px; width: 100%; height: 8px; margin: 0;"
+                                                align="left">
+                                                 
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="card w-100 " border="0" cellpadding="0" cellspacing="0"
+                                           style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: separate !important; border-radius: 4px; width: 100%; overflow: hidden; border: 1px solid #dee2e6;"
+                                           bgcolor="#ffffff">
+                                        <tbody>
+                                        <tr>
+                                            <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
+                                                align="left">
+                                                <div>
+                                                    <table class="card-body" border="0" cellpadding="0" cellspacing="0"
+                                                           style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse; width: 100%;">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; width: 100%; margin: 0; padding: 20px;"
+                                                                align="left">
+                                                                <div>
+                                                                    <table class="mx-auto" align="center" border="0"
+                                                                           cellpadding="0" cellspacing="0"
+                                                                           style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: collapse; margin: 0 auto;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; margin: 0;"
+                                                                                align="left">
+                                                                                <img width="50" height="50" class=""
+                                                                                     src="https://d2wwbq608e82yj.cloudfront.net/logo/master/logo.png"
+                                                                                     style="height: auto; line-height: 100%; outline: none; text-decoration: none; border: 0 none;">
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <h4 class="text-center"
+                                                                        style="margin-top: 0; margin-bottom: 0; font-weight: 500; color: inherit; vertical-align: baseline; font-size: 24px; line-height: 28.8px;"
+                                                                        align="center">{title}</h4>
+                                                                    <p class="text-center text-muted"
+                                                                       style="line-height: 24px; font-size: 16px; color: #636c72; margin: 0;"
+                                                                       align="center">If you requested a password reset for <span class="text-primary" style="color: #007bff;">{user.email}</span>,
+                                                                        click the button below. If you didn't make this request, please ignore this email.</p>
+                                                                    <table class="s-2 w-100" border="0" cellpadding="0"
+                                                                           cellspacing="0" style="width: 100%;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td height="8"
+                                                                                style="border-spacing: 0px; border-collapse: collapse; line-height: 8px; font-size: 8px; width: 100%; height: 8px; margin: 0;"
+                                                                                align="left">
+                                                                                 
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <table class="btn btn-primary btn-lg mx-auto "
+                                                                           align="center" border="0" cellpadding="0"
+                                                                           cellspacing="0"
+                                                                           style="font-family: Helvetica, Arial, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing: 0px; border-collapse: separate !important; border-radius: 4px; margin: 0 auto;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 16px; border-radius: 4px; margin: 0;"
+                                                                                align="center" bgcolor="#007bff">
+                                                                                <a href="{reset}"
+                                                                                   style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 4.8px; line-height: 30px; display: inline-block; font-weight: normal; white-space: nowrap; background-color: #007bff; color: #ffffff; padding: 8px 16px; border: 1px solid #007bff;">Reset</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table></td>
-                                            </tr>
-                                            <tr>
-                                                <td height='15'></td>
-                                            </tr>
-                                            <tr>
-                                                <td ><hr style='height:1px;background:#DDDDDD;border:none;'></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- =============== END HEADER =============== -->
-                                    <!-- =============== START BODY =============== -->
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
-                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td height="40"></td>
-                                            </tr>
-                                            <tr>
-                                                <td valign="top" width="580"><div class='contentEditableContainer contentImageEditable'>
-                                                    <div class='contentEditable' style="text-align: center;"><img class="banner" src="https://d2wwbq608e82yj.cloudfront.net/logo/master/logo.png" alt="Logo" title="Logo" width="580" height="221" border="0"></div></div></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td height='40'></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td valign="top" width="40">&nbsp;</td>
-                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                            <tr><td height='25'></td></tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class='contentEditableContainer contentTextEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;'>
-                                                                            <h2 style="font-size: 20px;">{title}</h2>
-                                                                            <br>
-                                                                            <p>If you requested a password reset for {user.email}, click the button below. If you didn't make this request,
-                                                                                please ignore this email.</p>
-                                                                            <br><br>
-                                                                            <a target='_blank' href="{reset}" class='link3' style='color:#555555;'>Reset your password</a>
-                                                                            <br>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr><td height='24'></td></tr>
-                                                        </table></td>
-                                                        <td valign="top" width="40">&nbsp;</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-                                    <!-- =============== END BODY =============== -->
-                                    <!-- =============== START FOOTER =============== -->
-
-                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td height="48"></td>
-                                            </tr>
-                                            <tr>
-                                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                        <td><table width="100%" cellpadding="0" cellspacing="0" align="center">
-                                                            <tr>
-                                                                <td>
-                                                                    <div class='contentEditableContainer contentTextEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                            <p>
-                                                                                Sent by Serandives Pvt Ltd
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table></td>
-                                                        <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-
-                                    </div>
-                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td height="40"></td>
-                                            </tr>
-                                            <tr>
-                                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                        <td class="specbundle2"><table width="100%" cellpadding="0" cellspacing="0" align="center">
-                                                            <tr>
-                                                                <td width='40'>
-                                                                    <div class='contentEditableContainer contentFacebookEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                            <img src="images/facebook.png" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0" >
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td width='10'></td>
-                                                                <td width='40'>
-                                                                    <div class='contentEditableContainer contentTwitterEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                            <img src="images/twitter.png" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td width='10'></td>
-                                                                <td width='40'>
-                                                                    <div class='contentEditableContainer contentImageEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                            <img src="images/red.png" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td width='10'></td>
-                                                                <td width='40'>
-                                                                    <div class='contentEditableContainer contentImageEditable'>
-                                                                        <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                            <img src="images/blue.png" alt="Social media" width='40' height='40' data-max-width="40" border="0">
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table></td>
-                                                        <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td height='40'></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <!-- =============== END FOOTER =============== -->
-                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="s-4 w-100" border="0" cellpadding="0" cellspacing="0"
+                                           style="width: 100%;">
+                                        <tbody>
+                                        <tr>
+                                            <td height="24"
+                                                style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 24px; width: 100%; height: 24px; margin: 0;"
+                                                align="left">
+                                                 
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center text-muted " style="color: #636c72;" align="center">© serandives.com</div>
+                                    <table class="s-4 w-100" border="0" cellpadding="0" cellspacing="0"
+                                           style="width: 100%;">
+                                        <tbody>
+                                        <tr>
+                                            <td height="24"
+                                                style="border-spacing: 0px; border-collapse: collapse; line-height: 24px; font-size: 24px; width: 100%; height: 24px; margin: 0;"
+                                                align="left">
+                                                 
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        <!--[if (gte mso 9)|(IE)]>
                         </td>
-                        <td valign="top" width="20">&nbsp;</td>
-                    </tr>
-                    </tbody>
-                </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                        </tr>
+                        </tbody>
+                        </table>
+                        <![endif]-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
     </tbody>
 </table>
-
-<!--Default Zone
-
-      <div class="customZone" data-type="image">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40'></td></tr>
-                <tr>
-                  <td>
-                    <div class='contentEditableContainer contentImageEditable'>
-                      <div class='contentEditable' style="text-align: center;">
-                        <img src="images/bigImg.png" alt="Logo" width='580' height='221' data-default="placeholder" data-max-width="580">
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-      </div>
-
-      <div class='customZone' data-type="text">
-      <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40'></td></tr>
-                <tr>
-                  <td style='border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px'>
-                    <table width="480" border="0" cellspacing="0" cellpadding="0" align="center">
-                      <tr><td height='25'></td></tr>
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                              <h2 style="font-size: 20px;">First Feature</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr><td height='24'></td></tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </div>
-              </div>
-
-      <div class="customZone" data-type="imageText">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr>
-                  <td width='150'>
-                    <div class='contentEditableContainer contentImageEditable'>
-                      <div class='contentEditable'>
-                        <img src="images/side.png" alt="side image" width='142' height='142' data-default="placeholder" data-max-width="150">
-                      </div>
-                    </div>
-                  </td>
-                  <td width='20'></td>
-                  <td width='410'>
-                    <table width="410" cellpadding="0" cellspacing="0" align="center">
-                      <tr><td height='15'></td></tr>
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable'>
-                              <h2 style='font-size:16px;'>Sub Feature 2</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-                              <br>
-                              <a target='_blank' href="#" class='link4'  >read more</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr><td colspan='3'><hr style='height:1px;background:#DDDDDD;border:none;'></td></tr>
-              </table>
-            </div>
-      </div>
-
-      <div class="customZone" data-type="Textimage">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr>
-                  <td width='410'>
-                    <table width="410" cellpadding="0" cellspacing="0" align="center">
-                      <tr><td height='15'></td></tr>
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable'>
-                              <h2 style='font-size:16px;'>Sub Feature 2</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-                              <br>
-                              <a target='_blank' href="#" class='link4' >read more</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td width='20'></td>
-                  <td width='150'>
-                    <div class='contentEditableContainer contentImageEditable'>
-                      <div class='contentEditable'>
-                        <img src="images/side2.png" alt="side image" width='142' height='142' data-default="placeholder" data-max-width="150">
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr><td colspan='3'><hr style='height:1px;background:#DDDDDD;border:none;'></td></tr>
-              </table>
-            </div>
-      </div>
-
-      <div class="customZone" data-type="textText">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr>
-                  <td width='252'>
-                    <table width='252' border='0' cellpadding="0" cellspacing="0" align="center">
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable' style='text-align: left;'>
-                              <h2 style="font-size: 20px;">Subtitle</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.
-                              </p>
-                              <br><br>
-                              <a target='_blank' href="#" class='link2'>Call to action</a>
-                              <br>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td width='75'></td>
-                  <td width='252'>
-                    <table width='252' border='0' cellpadding="0" cellspacing="0" align="center">
-                      <tr>
-                        <td>
-                           <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable' style='text-align: left;'>
-                              <h2 style="font-size: 20px;">Subtitle</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.
-                              </p>
-                              <br><br>
-                              <a target='_blank' href="#" class='link2'>Call to action</a>
-                              <br>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </div>
-      </div>
-
-      <div class="customZone" data-type="qrcode">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr>
-                  <td width='75' valign='middle' style='vertical-align:middle;'>
-                    <div class='contentEditableContainer contentQrcodeEditable'>
-                      <div class='contentEditable' style='text-align:center;'>
-                        <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/qr_code.png" width="75" height='75'>
-                      </div>
-                    </div>
-                  </td>
-                  <td width='20'></td>
-                  <td width='485'>
-                    <table width="485" cellpadding="0" cellspacing="0" align="center">
-                      <tr><td height='15'></td></tr>
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable'>
-                              <h2 style='font-size:16px;'>Sub Feature 1</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-                              <br>
-                              <a target='_blank' href="#" class='link4'  >read more</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr><td colspan='3'><hr style='height:1px;background:#DDDDDD;border:none;'></td></tr>
-              </table>
-            </div>
-      </div>
-
-      <div class="customZone" data-type="gmap">
-          <div class='movableContent'>
-              <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr>
-                  <td width='250' valign='middle' style='vertical-align:middle;'>
-                    <div class='contentEditableContainer contentGmapEditable'>
-                      <div class='contentEditable' >
-                        <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/gmap_example.png" width="150" height='150' data-default="placeholder">
-                      </div>
-                    </div>
-                  </td>
-                  <td width='20'></td>
-                  <td width='310'>
-                    <table width="310" cellpadding="0" cellspacing="0" align="center">
-                      <tr><td height='15'></td></tr>
-                      <tr>
-                        <td>
-                          <div class='contentEditableContainer contentTextEditable'>
-                            <div class='contentEditable'>
-                              <h2 style='font-size:16px;'>Sub Feature 3</h2>
-                              <br>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-                              <br>
-                              <a target='_blank' href="#" class='link4'  >read more</a>
-                            </div>
-                          </div>
-                        </td>
-
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr><td height='40' colspan="3"></td></tr>
-                <tr><td colspan='3'><hr style='height:1px;background:#DDDDDD;border:none;'></td></tr>
-              </table>
-            </div>
-      </div>
-
-      <div class="customZone" data-type="social">
-          <div class="movableContent">
-              <div >
-                  <table width='600' cellpadding="0" cellspacing="0" border="0" >
-                    <tr>
-                    <td height='42' colspan='4'>&nbsp;</td>
-              </tr>
-                      <tr>
-                          <td valign='top' colspan="4" style='padding:0 20px;'>
-                              <div class="contentTextEditable contentEditableContainer">
-                                  <div style='text-align:center;' class="contentEditable">
-                                      <h2 class='big'>This is a subtitle</h2>
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                      <tr><td height='30'></td></tr>
-                      <tr>
-                          <td width='62' valign='top' valign="top" width="62" style='padding:0 0 0 20px;'>
-                              <div class="contentEditableContainer contentTwitterEditable">
-                                  <div class="contentEditable">
-                                      <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/icon_twitter.png" width="42" height="42" data-customIcon="true" data-noText="false" data-max-width='42'>
-                                  </div>
-                              </div>
-                          </td>
-                          <td width='216' valign='top' >
-                              <div class="contentEditableContainer contentTextEditable">
-                                  <div  class="contentEditable">
-                                      <p >Follow us on Twitter to stay up to date with company news and other information.</p>
-                                  </div>
-                              </div>
-                          </td>
-                          <td width='62' valign='top' valign="top" width="62">
-                              <div class="contentEditableContainer contentFacebookEditable">
-                                  <div class="contentEditable">
-                                      <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/icon_facebook.png" width="42" height="42" data-customIcon="true" data-noText="false" data-max-width='42'>
-                                  </div>
-                              </div>
-                          </td>
-                          <td width='216' valign='top' style='padding:0 20px 0 0;'>
-                              <div class="contentEditableContainer contentTextEditable">
-                                  <div  class="contentEditable">
-                                      <p >Like us on Facebook to keep up with our news, updates and other discussions.</p>
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-              </div>
-          </div>
-      </div>
-
-      <div class="customZone" data-type="twitter">
-          <div class="movableContent">
-              <div '>
-                  <table cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                    <td height='42'>&nbsp;</td>
-                    <td height='42'>&nbsp;</td>
-              </tr>
-                      <tr>
-                          <td valign='top' valign="top" width="62" style='padding:0 0 0 20px;'>
-                              <div class="contentEditableContainer contentTwitterEditable">
-                                  <div class="contentEditable">
-                                      <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/icon_twitter.png" width="42" height="42" data-customIcon="true" data-noText="false" data-max-width='42'>
-                                  </div>
-                              </div>
-                          </td>
-                          <td valign='top' style='padding:0 20px 0 0;'>
-                              <div class="contentEditableContainer contentTextEditable">
-                                  <div  class="contentEditable">
-                                      <p >Follow us on Twitter to stay up to date with company news and other information.</p>
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-              </div>
-          </div>
-      </div>
-
-      <div class="customZone" data-type="facebook">
-          <div class="movableContent">
-              <div >
-                  <table cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                    <td height='42'>&nbsp;</td>
-                    <td height='42'>&nbsp;</td>
-              </tr>
-                      <tr>
-                          <td valign='top' valign="top" width="62" style='padding:0 0 0 20px;'>
-                              <div class="contentEditableContainer contentFacebookEditable">
-                                  <div class="contentEditable">
-                                      <img src="/applications/Mail_Interface/3_3/modules/User_Interface/core/v31_campaigns/images/neweditor/default/icon_facebook.png" width="42" height="42" data-customIcon="true" data-noText="false" data-max-width='42'>
-                                  </div>
-                              </div>
-                          </td>
-                          <td valign='top' style='padding:0 20px 0 0;'>
-                              <div class="contentEditableContainer contentTextEditable">
-                                  <div  class="contentEditable">
-                                      <p >"Like us on Facebook to keep up with our news, updates and other discussions.</p>
-                                  </div>
-                              </div>
-                          </td>
-                      </tr>
-                  </table>
-              </div>
-          </div>
-      </div>
-
-      <div class="customZone" data-type="line">
-          <div class='movableContent'>
-                <table width="580" border="0" cellspacing="0" cellpadding="0" align="center">
-                  <tr><td height='40'></td></tr>
-                  <tr><td height='1' bgcolor='#DDDDDD'></td></tr>
-                </table>
-              </div>
-      </div>
-
-
-      <div class="customZone" data-type="colums1v2"><div class='movableContent'>
-                          <table width="580" border="0" cellspacing="0" cellpadding="0" align="center" >
-                            <tr><td height='40'></td></tr>
-                            <tr>
-                              <td align="left" valign="top" class="newcontent">
-
-                              </td>
-                            </tr>
-                          </table>
-                    </div>
-      </div>
-
-      <div class="customZone" data-type="colums2v2"><div class='movableContent'>
-                      <table width="580" border="0" cellspacing="0" cellpadding="0" align="center" valign='top'>
-                        <tr><td colspan='3' height='40'></td></tr>
-                        <tr>
-                          <td width='280'  valign='top' class="newcontent">
-
-                          </td>
-
-                          <td width='20'></td>
-
-                          <td width='280' valign='top' class="newcontent">
-
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-      </div>
-
-      <div class="customZone" data-type="colums3v2"><div class='movableContent'>
-                      <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" valign='top'>
-                        <tr><td colspan='5' height='40'></td></tr>
-                        <tr>
-                          <td width='186'  valign='top' class="newcontent">
-
-                          </td>
-
-                          <td width='10'></td>
-
-                          <td width='187'  valign='top' class="newcontent">
-
-                          </td>
-
-                          <td width='10'></td>
-
-                          <td width='186'  valign='top' class="newcontent">
-
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-      </div>
-
-      <div class="customZone" data-type="textv2">
-
-        <div class='contentEditableContainer contentTextEditable'>
-          <div class='contentEditable' style='text-align: center;'>
-            <h2 style="font-size: 20px;">First Feature</h2>
-            <br>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Has been the industry's standard dummy text ever since the 1500s.</p>
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-
-    -->
-<!--Default Zone End-->
-
 </body>
 </html>

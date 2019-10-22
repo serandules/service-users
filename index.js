@@ -109,7 +109,7 @@ module.exports = function (router, done) {
                       }
                       var ctx = {
                         user: user,
-                        title: 'Welcome to Serandives',
+                        title: 'Welcome',
                         confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
                       };
                       dust.render('service-users-signup', ctx, function (err, html) {
