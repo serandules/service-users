@@ -6,6 +6,8 @@ var utils = require('utils');
 var validators = require('../validators');
 
 module.exports = function (route) {
+  route.use(serandi.json);
+
   route.use(function (req, res, next) {
     req.ctx.previleged = true;
     next();

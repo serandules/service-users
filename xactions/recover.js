@@ -30,7 +30,8 @@ var recover = function (user, done) {
       model: Otps,
       data: {
         name: 'accounts-update'
-      }
+      },
+      overrides: {}
     }, function (err, otp) {
       if (err) {
         return done(err);
@@ -57,6 +58,7 @@ var recover = function (user, done) {
 };
 
 module.exports = function (route) {
+  route.use(serandi.json);
   route.use(serandi.captcha);
   route.use(serandi.query);
 

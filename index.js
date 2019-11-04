@@ -64,8 +64,8 @@ module.exports = function (router, done) {
       router.use(bodyParser.json());
 
       router.post('/',
-        serandi.json,
         serandi.xactions(xactions.post),
+        serandi.json,
         serandi.captcha,
         serandi.create(Users),
         function (req, res, next) {
@@ -102,7 +102,8 @@ module.exports = function (router, done) {
                       model: Otps,
                       data: {
                         name: 'accounts-confirm'
-                      }
+                      },
+                      overrides: {}
                     }, function (err, otp) {
                       if (err) {
                         return next(err);
@@ -164,8 +165,8 @@ module.exports = function (router, done) {
         });
 
       router.put('/:id',
-        serandi.json,
         serandi.xactions(xactions.put),
+        serandi.json,
         validators.update,
         function (req, res, next) {
           model.update(req.ctx, function (err, user) {
