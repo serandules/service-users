@@ -25,7 +25,7 @@ module.exports = function (route) {
 
   route.use(function (req, res, next) {
     var user = _.defaults(req.body, utils.json(req.user));
-    if (!utils.permitted(user, user, 'recover')) {
+    if (!utils.permitted(user, user, 'recover') && !utils.permitted(user, user, 'verify')) {
       return next(errors.unauthorized());
     }
     var ctx = req.ctx;
