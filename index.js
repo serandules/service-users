@@ -82,11 +82,11 @@ module.exports = function (router, done) {
               }
               var permit = workflow.permits[workflow.start];
               var usr = utils.json(user);
-              utils.toPermissions(usr.id, permit, function (err, permissions) {
+              utils.toPermissions(usr.id, permit, usr, function (err, permissions) {
                 if (err) {
                   return next(err);
                 }
-                utils.toVisibility(usr.id, permit, function (err, visibility) {
+                utils.toVisibility(usr.id, permit, usr, function (err, visibility) {
                   if (err) {
                     return next(err);
                   }
