@@ -34,12 +34,13 @@ var recover = function (user, done) {
       overrides: {}
     }, function (err, otp) {
       if (err) {
+        console.error(err)
         return done(err);
       }
       var ctx = {
         user: user,
         title: 'Reset your password',
-        reset: utils.resolve(util.format('accounts:///reset?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
+        reset: utils.resolve(util.format('accounts:///reset?user=%s&email=%s&otp=%s', user.id, user.email, otp.strong))
       };
       dust.render('service-users-recover', ctx, function (err, html) {
         if (err) {

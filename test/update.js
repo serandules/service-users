@@ -31,7 +31,8 @@ describe('PUT /users', function () {
       r.statusCode.should.equal(201);
       should.exist(b);
       should.exist(b.id);
-      should.exist(b.value);
+      should.exist(b.strong);
+      should.exist(b.weak);
       should.exist(r.headers['location']);
       r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/otps/' + b.id));
       done(null, b);
@@ -96,7 +97,7 @@ describe('PUT /users', function () {
             uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
             method: 'PUT',
             headers: {
-              'X-OTP': otp.value
+              'X-OTP': otp.strong
             },
             auth: {
               bearer: accessToken
@@ -123,7 +124,7 @@ describe('PUT /users', function () {
                 uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
                 method: 'PUT',
                 headers: {
-                  'X-OTP': otp.value
+                  'X-OTP': otp.strong
                 },
                 auth: {
                   bearer: accessToken
@@ -223,13 +224,14 @@ describe('PUT /users', function () {
         should.exist(b);
         should.exist(b.id);
         should.exist(b.name);
-        should.exist(b.value);
+        should.exist(b.strong);
+        should.exist(b.weak);
         usr.password = pot.password();
         request({
           uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
           method: 'PUT',
           headers: {
-            'X-OTP': b.value
+            'X-OTP': b.strong
           },
           auth: {
             bearer: accessToken
@@ -309,13 +311,14 @@ describe('PUT /users', function () {
         should.exist(b);
         should.exist(b.id);
         should.exist(b.name);
-        should.exist(b.value);
+        should.exist(b.strong);
+        should.exist(b.weak);
         usr.password = pot.password();
         request({
           uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
           method: 'PUT',
           headers: {
-            'X-OTP': b.value
+            'X-OTP': b.strong
           },
           auth: {
             bearer: accessToken

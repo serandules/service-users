@@ -138,9 +138,9 @@ describe('POST /users (recover)', function () {
           }
           request({
             uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
-            method: 'PUT',
+            method: 'POST',
             headers: {
-              'X-OTP': otp.value,
+              'X-OTP': otp.strong,
               'X-Action': 'reset'
             },
             json: {

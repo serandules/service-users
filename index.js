@@ -26,9 +26,7 @@ template('signup');
 
 var xactions = {
   post: {
-    recover: require('./xactions/recover')
-  },
-  put: {
+    recover: require('./xactions/recover'),
     reset: require('./xactions/reset'),
     confirm: require('./xactions/confirm')
   }
@@ -56,7 +54,6 @@ module.exports = function (router, done) {
           '^\/.*'
         ],
         PUT: [
-          '^\/$',
           '^\/.*'
         ]
       }));
@@ -111,7 +108,7 @@ module.exports = function (router, done) {
                       var ctx = {
                         user: user,
                         title: 'Welcome',
-                        confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.value))
+                        confirm: utils.resolve(util.format('accounts:///confirm?user=%s&email=%s&otp=%s', user.id, user.email, otp.strong))
                       };
                       dust.render('service-users-signup', ctx, function (err, html) {
                         if (err) {
@@ -137,6 +134,8 @@ module.exports = function (router, done) {
             });
           });
         });
+
+      router.post('/:id', serandi.xactions(xactions.post));
 
       router.get('/:id',
         serandi.findOne(Users),
@@ -165,7 +164,6 @@ module.exports = function (router, done) {
         });
 
       router.put('/:id',
-        serandi.xactions(xactions.put),
         serandi.json,
         validators.update,
         function (req, res, next) {
