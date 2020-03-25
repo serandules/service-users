@@ -1,3 +1,4 @@
+var log = require('logger')('service-users:xactions:recover');
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
@@ -34,7 +35,7 @@ var recover = function (user, done) {
       overrides: {}
     }, function (err, otp) {
       if (err) {
-        console.error(err)
+        log.error('create:errored', 'user:%j', user, err);
         return done(err);
       }
       var ctx = {
