@@ -271,7 +271,7 @@ describe('POST /users', function () {
       json: {
         email: 'admin@serandives.com',
         password: '1@2.Com',
-        alias: 'admin'
+        username: 'admin'
       }
     }, function (e, r, b) {
       if (e) {
@@ -296,7 +296,7 @@ describe('POST /users', function () {
       json: {
         email: 'create-user@serandives.com',
         password: '1@2.Com',
-        alias: 'create-user'
+        username: 'create-user'
       }
     }, function (e, r, b) {
       if (e) {

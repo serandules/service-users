@@ -18,7 +18,7 @@ describe('GET /users/:id', function () {
       pot.createUser(c.serandivesId, {
         email: 'findone-user@serandives.com',
         password: '1@2.Com',
-        alias: 'findone-user'
+        username: 'findone-user'
       }, function (err, usr, token) {
         if (err) {
           return done(err);
@@ -41,7 +41,7 @@ describe('GET /users/:id', function () {
       }
       r.statusCode.should.equal(200);
       should.exist(b.id);
-      should.exist(b.alias);
+      should.exist(b.username);
       Object.keys(b).length.should.equal(2);
       done();
     });
@@ -76,7 +76,7 @@ describe('GET /users/:id', function () {
         r.statusCode.should.equal(200);
         should.exist(b);
         should.exist(b.id);
-        should.exist(b.alias);
+        should.exist(b.username);
         Object.keys(b).length.should.equal(2);
         request({
           uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
@@ -84,7 +84,7 @@ describe('GET /users/:id', function () {
           qs: {
             data: JSON.stringify({
               fields: {
-                alias: 1
+                username: 1
               }
             })
           },
@@ -96,7 +96,7 @@ describe('GET /users/:id', function () {
           r.statusCode.should.equal(200);
           should.exist(b);
           should.exist(b.id);
-          should.exist(b.alias);
+          should.exist(b.username);
           b.id.should.equal(user.id);
           done();
         });

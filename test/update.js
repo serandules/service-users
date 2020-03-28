@@ -53,7 +53,7 @@ describe('PUT /users', function () {
         pot.createUser(c.serandivesId, {
           email: 'update-user@serandives.com',
           password: pot.password(),
-          alias: 'update-user'
+          username: 'update-user'
         }, function (err, usr, token) {
           if (err) {
             return done(err);

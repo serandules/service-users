@@ -21,7 +21,7 @@ describe('POST /users (recover)', function () {
       pot.createUser(c.serandivesId, {
         email: 'test-recover-user@serandives.com',
         password: '1@2.Com',
-        alias: 'test-recover-user'
+        username: 'test-recover-user'
       }, function (err, usr, token) {
         if (err) {
           return done(err);

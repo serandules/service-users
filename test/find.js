@@ -18,7 +18,7 @@ describe('GET /users', function () {
       pot.createUser(c.serandivesId, {
         email: 'find-user@serandives.com',
         password: '1@2.Com',
-        alias: 'find-user'
+        username: 'find-user'
       }, function (err, usr, token) {
         if (err) {
           return done(err);
@@ -43,7 +43,7 @@ describe('GET /users', function () {
       should.exist(b.length);
       b.forEach(function (u) {
         should.exist(u.id);
-        should.exist(u.alias);
+        should.exist(u.username);
         Object.keys(u).length.should.equal(2);
       });
       done();
@@ -67,7 +67,7 @@ describe('GET /users', function () {
       var found = false;
       b.forEach(function (u) {
         should.exist(u.id);
-        should.exist(u.alias);
+        should.exist(u.username);
         if (u.id === user.id) {
           found.should.equal(false);
           return found = true;
