@@ -286,6 +286,31 @@ describe('POST /users', function () {
     });
   });
 
+  it('with existing username', function (done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/users'),
+      method: 'POST',
+      headers: {
+        'X-Captcha': 'dummy'
+      },
+      json: {
+        email: 'admin-other@serandives.com',
+        password: '1@2.Com',
+        username: 'admin'
+      }
+    }, function (e, r, b) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(errors.conflict().status);
+      should.exist(b);
+      should.exist(b.code);
+      should.exist(b.message);
+      b.code.should.equal(errors.conflict().data.code);
+      done();
+    });
+  });
+
   it('with new email', function (done) {
     request({
       uri: pot.resolve('accounts', '/apis/v/users'),
