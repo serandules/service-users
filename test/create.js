@@ -237,6 +237,30 @@ describe('POST /users', function () {
     });
   });
 
+  it('password without a special character', function (done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/users'),
+      method: 'POST',
+      headers: {
+        'X-Captcha': 'dummy'
+      },
+      json: {
+        email: 'create-user@serandives.com',
+        password: 'Hello1'
+      }
+    }, function (e, r, b) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(errors.unprocessableEntity().status);
+      should.exist(b);
+      should.exist(b.code);
+      should.exist(b.message);
+      b.code.should.equal(errors.unprocessableEntity().data.code);
+      done();
+    });
+  });
+
   it('password same as email', function (done) {
     request({
       uri: pot.resolve('accounts', '/apis/v/users'),
@@ -247,6 +271,31 @@ describe('POST /users', function () {
       json: {
         email: 'create-User@serandives.com',
         password: 'create-use@Serandives.com'
+      }
+    }, function (e, r, b) {
+      if (e) {
+        return done(e);
+      }
+      r.statusCode.should.equal(errors.unprocessableEntity().status);
+      should.exist(b);
+      should.exist(b.code);
+      should.exist(b.message);
+      b.code.should.equal(errors.unprocessableEntity().data.code);
+      done();
+    });
+  });
+
+  it('password same as username', function (done) {
+    request({
+      uri: pot.resolve('accounts', '/apis/v/users'),
+      method: 'POST',
+      headers: {
+        'X-Captcha': 'dummy'
+      },
+      json: {
+        username: 'create-user1',
+        email: 'create-User@serandives.com',
+        password: 'create-user1'
       }
     }, function (e, r, b) {
       if (e) {
