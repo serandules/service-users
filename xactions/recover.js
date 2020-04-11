@@ -41,7 +41,8 @@ var recover = function (user, done) {
       var ctx = {
         user: user,
         title: 'Reset your password',
-        reset: utils.resolve(util.format('accounts:///reset?user=%s&email=%s&otp=%s', user.id, user.email, otp.strong))
+        reset: utils.resolve(util.format('accounts:///reset?user=%s&email=%s&username=%s&otp=%s',
+          user.id, user.email, user.username, otp.strong))
       };
       dust.render('service-users-recover', ctx, function (err, html) {
         if (err) {
