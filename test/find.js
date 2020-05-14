@@ -25,7 +25,31 @@ describe('GET /users', function () {
         }
         user = usr;
         accessToken = token.access_token;
-        done();
+        // unverified user
+        request({
+          uri: pot.resolve('accounts', '/apis/v/users'),
+          method: 'POST',
+          headers: {
+            'X-Captcha': 'dummy'
+          },
+          json: {
+            email: 'unverified-user@serandives.com',
+            password: '1@2.Com',
+            username: 'unverified-user'
+          }
+        }, function (e, r, b) {
+          if (e) {
+            return done(e);
+          }
+          r.statusCode.should.equal(201);
+          should.exist(b);
+          should.exist(b.id);
+          should.exist(b.email);
+          b.email.should.equal('unverified-user@serandives.com');
+          should.exist(r.headers['location']);
+          r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/users/' + b.id));
+          done();
+        });
       });
     });
   });
@@ -41,10 +65,12 @@ describe('GET /users', function () {
       }
       r.statusCode.should.equal(200);
       should.exist(b.length);
+      var unverified = false
       b.forEach(function (u) {
         should.exist(u.id);
         should.exist(u.username);
         Object.keys(u).length.should.equal(2);
+        unverified = unverified || (u.username === 'unverified-user');
       });
       done();
     });
