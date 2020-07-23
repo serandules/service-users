@@ -15,7 +15,7 @@ describe('PUT /users', function () {
 
   var createOTPS = function (token, done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/otps'),
+      uri: pot.resolve('apis', '/v/otps'),
       method: 'POST',
       json: {
         name: 'accounts-update',
@@ -34,7 +34,7 @@ describe('PUT /users', function () {
       should.exist(b.strong);
       should.exist(b.weak);
       should.exist(r.headers['location']);
-      r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/otps/' + b.id));
+      r.headers['location'].should.equal(pot.resolve('apis', '/v/otps/' + b.id));
       done(null, b);
     })
   };
@@ -68,7 +68,7 @@ describe('PUT /users', function () {
 
   it('groups arrays permission', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -94,7 +94,7 @@ describe('PUT /users', function () {
             return done(err);
           }
           request({
-            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+            uri: pot.resolve('apis', '/v/users/' + user.id),
             method: 'PUT',
             headers: {
               'X-OTP': otp.strong
@@ -121,7 +121,7 @@ describe('PUT /users', function () {
                 return done(err);
               }
               request({
-                uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+                uri: pot.resolve('apis', '/v/users/' + user.id),
                 method: 'PUT',
                 headers: {
                   'X-OTP': otp.strong
@@ -150,7 +150,7 @@ describe('PUT /users', function () {
 
   it('password update without otp', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -168,7 +168,7 @@ describe('PUT /users', function () {
       usr.email.should.equal('update-user@serandives.com');
       usr.password = pot.password();
       request({
-        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        uri: pot.resolve('apis', '/v/users/' + user.id),
         method: 'PUT',
         auth: {
           bearer: accessToken
@@ -190,7 +190,7 @@ describe('PUT /users', function () {
 
   it('password update with otp', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -207,7 +207,7 @@ describe('PUT /users', function () {
       usr.id.should.equal(user.id);
       usr.email.should.equal('update-user@serandives.com');
       request({
-        uri: pot.resolve('accounts', '/apis/v/otps'),
+        uri: pot.resolve('apis', '/v/otps'),
         method: 'POST',
         auth: {
           bearer: accessToken
@@ -228,7 +228,7 @@ describe('PUT /users', function () {
         should.exist(b.weak);
         usr.password = pot.password();
         request({
-          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          uri: pot.resolve('apis', '/v/users/' + user.id),
           method: 'PUT',
           headers: {
             'X-OTP': b.strong
@@ -247,7 +247,7 @@ describe('PUT /users', function () {
           should.exist(b.email);
           b.id.should.equal(usr.id);
           request({
-            uri: pot.resolve('accounts', '/apis/v/tokens'),
+            uri: pot.resolve('apis', '/v/tokens'),
             method: 'POST',
             headers: {
               'X-Captcha': 'dummy'
@@ -277,7 +277,7 @@ describe('PUT /users', function () {
 
   it('password update with invalid otp', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -294,7 +294,7 @@ describe('PUT /users', function () {
       usr.id.should.equal(user.id);
       usr.email.should.equal('update-user@serandives.com');
       request({
-        uri: pot.resolve('accounts', '/apis/v/otps'),
+        uri: pot.resolve('apis', '/v/otps'),
         method: 'POST',
         auth: {
           bearer: accessToken
@@ -315,7 +315,7 @@ describe('PUT /users', function () {
         should.exist(b.weak);
         usr.password = pot.password();
         request({
-          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          uri: pot.resolve('apis', '/v/users/' + user.id),
           method: 'PUT',
           headers: {
             'X-OTP': b.strong
@@ -341,7 +341,7 @@ describe('PUT /users', function () {
 
   it('email address update blocked', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -359,7 +359,7 @@ describe('PUT /users', function () {
       usr.email.should.equal('update-user@serandives.com');
       usr.email = 'other@serandives.com';
       request({
-        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        uri: pot.resolve('apis', '/v/users/' + user.id),
         method: 'PUT',
         auth: {
           bearer: accessToken
@@ -375,7 +375,7 @@ describe('PUT /users', function () {
         should.exist(b.message);
         b.code.should.equal(errors.forbidden().data.code);
         request({
-          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          uri: pot.resolve('apis', '/v/users/' + user.id),
           method: 'GET',
           auth: {
             bearer: accessToken
@@ -399,7 +399,7 @@ describe('PUT /users', function () {
 
   it('user is not changed when updated by another user', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -414,7 +414,7 @@ describe('PUT /users', function () {
       should.exist(usr.id);
       should.exist(usr.email);
       request({
-        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        uri: pot.resolve('apis', '/v/users/' + user.id),
         method: 'PUT',
         auth: {
           bearer: client.admin.token

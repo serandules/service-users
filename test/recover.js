@@ -35,7 +35,7 @@ describe('POST /users (recover)', function () {
 
   it('with no media type', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Action': 'recover'
@@ -56,7 +56,7 @@ describe('POST /users (recover)', function () {
 
   it('no captcha', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Action': 'recover'
@@ -81,7 +81,7 @@ describe('POST /users (recover)', function () {
 
   it('no action', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -106,7 +106,7 @@ describe('POST /users (recover)', function () {
 
   it('successful', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy',
@@ -137,7 +137,7 @@ describe('POST /users (recover)', function () {
             return done(err);
           }
           request({
-            uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+            uri: pot.resolve('apis', '/v/users/' + user.id),
             method: 'POST',
             headers: {
               'X-OTP': otp.strong,
@@ -153,7 +153,7 @@ describe('POST /users (recover)', function () {
             r.statusCode.should.equal(204);
             should.not.exist(b);
             request({
-              uri: pot.resolve('accounts', '/apis/v/tokens'),
+              uri: pot.resolve('apis', '/v/tokens'),
               method: 'POST',
               headers: {
                 'X-Captcha': 'dummy'

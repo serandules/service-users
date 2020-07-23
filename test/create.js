@@ -10,7 +10,7 @@ describe('POST /users', function () {
 
   it('with no media type', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -19,6 +19,7 @@ describe('POST /users', function () {
       if (e) {
         return done(e);
       }
+      console.log(b)
       r.statusCode.should.equal(errors.unsupportedMedia().status);
       should.exist(b);
       b = JSON.parse(b);
@@ -31,7 +32,7 @@ describe('POST /users', function () {
 
   it('with unsupported media type', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'Content-Type': 'application/xml',
@@ -53,7 +54,7 @@ describe('POST /users', function () {
 
   it('without email address', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -74,7 +75,7 @@ describe('POST /users', function () {
 
   it('with malformed email address (no @)', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -98,7 +99,7 @@ describe('POST /users', function () {
 
   it('with malformed email address (no .)', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -121,7 +122,7 @@ describe('POST /users', function () {
 
   it('with malformed email address (@ after .)', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -144,7 +145,7 @@ describe('POST /users', function () {
 
   it('without password', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -167,7 +168,7 @@ describe('POST /users', function () {
 
   it('password without a number', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -191,7 +192,7 @@ describe('POST /users', function () {
 
   it('password without an upper case letter', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -215,7 +216,7 @@ describe('POST /users', function () {
 
   it('password without a lower case letter', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -239,7 +240,7 @@ describe('POST /users', function () {
 
   it('password without a special character', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -263,7 +264,7 @@ describe('POST /users', function () {
 
   it('password same as email', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -287,7 +288,7 @@ describe('POST /users', function () {
 
   it('password same as username', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -312,7 +313,7 @@ describe('POST /users', function () {
 
   it('with existing email', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -337,7 +338,7 @@ describe('POST /users', function () {
 
   it('with existing username', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -362,7 +363,7 @@ describe('POST /users', function () {
 
   it('with new email', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'POST',
       headers: {
         'X-Captcha': 'dummy'
@@ -382,7 +383,7 @@ describe('POST /users', function () {
       should.exist(b.email);
       b.email.should.equal('create-user@serandives.com');
       should.exist(r.headers['location']);
-      r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/users/' + b.id));
+      r.headers['location'].should.equal(pot.resolve('apis', '/v/users/' + b.id));
       done();
     });
   });

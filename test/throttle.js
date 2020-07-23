@@ -2,10 +2,10 @@ var pot = require('pot');
 
 pot.throttlit('accounts', 'users');
 
-var domain = 'accounts';
+var domain = 'apis';
 var model = 'users';
 
-pot.throttlit('accounts', 'users', {
+pot.throttlit(domain, 'users', {
   apis: {
     confirm: {
       second: 0,
@@ -47,7 +47,7 @@ pot.throttlit('accounts', 'users', {
   confirm: {
     POST: function (i) {
       return {
-        url: pot.resolve(domain, '/apis/v/' + model + '/dummy'),
+        url: pot.resolve(domain, '/v/' + model + '/dummy'),
         headers: {
           'X-Action': 'confirm'
         }
@@ -57,7 +57,7 @@ pot.throttlit('accounts', 'users', {
   recover: {
     POST: function (i) {
       return {
-        url: pot.resolve(domain, '/apis/v/' + model + '/dummy'),
+        url: pot.resolve(domain, '/v/' + model + '/dummy'),
         headers: {
           'X-Action': 'recover'
         }
@@ -67,7 +67,7 @@ pot.throttlit('accounts', 'users', {
   reset: {
     POST: function (i) {
       return {
-        url: pot.resolve(domain, '/apis/v/' + model + '/dummy'),
+        url: pot.resolve(domain, '/v/' + model + '/dummy'),
         headers: {
           'X-Action': 'reset'
         }

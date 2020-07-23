@@ -27,7 +27,7 @@ describe('GET /users', function () {
         accessToken = token.access_token;
         // unverified user
         request({
-          uri: pot.resolve('accounts', '/apis/v/users'),
+          uri: pot.resolve('apis', '/v/users'),
           method: 'POST',
           headers: {
             'X-Captcha': 'dummy'
@@ -47,7 +47,7 @@ describe('GET /users', function () {
           should.exist(b.email);
           b.email.should.equal('unverified-user@serandives.com');
           should.exist(r.headers['location']);
-          r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/users/' + b.id));
+          r.headers['location'].should.equal(pot.resolve('apis', '/v/users/' + b.id));
           done();
         });
       });
@@ -56,7 +56,7 @@ describe('GET /users', function () {
 
   it('anonymous', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'GET',
       json: true
     }, function (e, r, b) {
@@ -78,7 +78,7 @@ describe('GET /users', function () {
 
   it('logged in unauthorized', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users'),
+      uri: pot.resolve('apis', '/v/users'),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -111,7 +111,7 @@ describe('GET /users', function () {
         return done(err);
       }
       request({
-        uri: pot.resolve('accounts', '/apis/v/users'),
+        uri: pot.resolve('apis', '/v/users'),
         method: 'GET',
         auth: {
           bearer: admin.token

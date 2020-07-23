@@ -32,7 +32,7 @@ describe('GET /users/:id', function () {
 
   it('unauthorized', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       json: true
     }, function (e, r, b) {
@@ -49,7 +49,7 @@ describe('GET /users/:id', function () {
 
   it('authorized', function (done) {
     request({
-      uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+      uri: pot.resolve('apis', '/v/users/' + user.id),
       method: 'GET',
       auth: {
         bearer: accessToken
@@ -66,7 +66,7 @@ describe('GET /users/:id', function () {
       b.id.should.equal(user.id);
       b.email.should.equal('findone-user@serandives.com');
       request({
-        uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+        uri: pot.resolve('apis', '/v/users/' + user.id),
         method: 'GET',
         json: true
       }, function (e, r, b) {
@@ -79,7 +79,7 @@ describe('GET /users/:id', function () {
         should.exist(b.username);
         Object.keys(b).length.should.equal(2);
         request({
-          uri: pot.resolve('accounts', '/apis/v/users/' + user.id),
+          uri: pot.resolve('apis', '/v/users/' + user.id),
           method: 'GET',
           qs: {
             data: JSON.stringify({

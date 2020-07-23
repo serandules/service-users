@@ -134,9 +134,13 @@ module.exports = function (router, done) {
           });
         });
 
-      router.post('/:id', serandi.xactions(xactions.post));
+      router.post('/:id',
+        serandi.id,
+        serandi.xactions(xactions.post)
+      );
 
       router.get('/:id',
+        serandi.id,
         serandi.findOne(Users),
         function (req, res, next) {
           model.findOne(req.ctx, function (err, user) {
@@ -163,6 +167,7 @@ module.exports = function (router, done) {
         });
 
       router.put('/:id',
+        serandi.id,
         serandi.json,
         validators.update,
         function (req, res, next) {
